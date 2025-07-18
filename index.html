@@ -334,7 +334,9 @@
                 { id: "adesivo_impresso_app", name: "Adesivo personalizado impresso + aplicação", price: 150, type: 'area' },
                 { id: "adesivo_laminado", name: "Adesivo personalizado laminado", price: 150, type: 'area' },
                 { id: "toldo_completo_inst", name: "Kit toldo completo + instalação", price: 450, type: 'linear' },
-                { id: "toldo_completo_sem_inst", name: "Kit toldo completo sem instalação", price: 350, type: 'linear' }
+                { id: "toldo_completo_sem_inst", name: "Kit toldo completo sem instalação", price: 350, type: 'linear' },
+                // NOVO PRODUTO ADICIONADO AQUI
+                { id: "troca_lona_toldo", name: "Troca de lona toldo", price: 230, type: 'area' }
             ];
 
             const installmentRates = {
@@ -517,10 +519,9 @@
                         <div class="space-y-3">
                 `;
                 
-                // *** LÓGICA DE CÁLCULO SIMPLIFICADA ***
                 quoteItems.forEach(item => {
                     const material = materials.find(m => m.id === item.materialId);
-                    if (!material) return; // Segurança caso o material não seja encontrado
+                    if (!material) return;
                     const itemPrice = item.size * material.price * item.quantity;
                     subtotal += itemPrice;
 
@@ -534,7 +535,6 @@
 
                 resultHTML += `</div> <hr class="border-gray-600 mt-4">`;
 
-                // --- Cálculo de Entrega, Descontos e Total ---
                 const deliveryOption = document.querySelector('input[name="delivery"]:checked').value;
                 const clientCep = document.getElementById('clientCep').value;
                 let deliveryFee = 0;
@@ -544,7 +544,7 @@
                     deliveryText = `Entrega via Motoboy (CEP: ${clientCep || 'não informado'})`;
                     if (deliveryFee === 0 && clientCep) deliveryText += " - Erro ao calcular. A combinar.";
                 } else if (deliveryOption === 'app') {
-                    deliveryFee = 0; // Zera a taxa para não somar no total
+                    deliveryFee = 0;
                     deliveryText = "Entrega via App (valor a consultar)";
                 }
 
