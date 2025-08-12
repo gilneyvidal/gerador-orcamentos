@@ -90,6 +90,58 @@
                 display: none;
             }
         }
+
+        /* Estilos do Chatbot */
+        .chatbot-container {
+            position: fixed;
+            bottom: 120px;
+            right: 40px;
+            z-index: 1000;
+            width: 350px;
+            height: 500px;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            display: none;
+            flex-direction: column;
+            background-color: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .chatbot-header {
+            background-color: #d4af37;
+            color: #000;
+            padding: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-toggle-btn {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 120px; /* Posicionamento para não sobrepor o WhatsApp */
+            background-color: #d4af37;
+            color: #000;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .chat-toggle-btn:hover {
+            background-color: #ffdf70;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -99,11 +151,38 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- Botão flutuante para abrir o chatbot -->
+    <div id="chat-toggle-btn" class="chat-toggle-btn">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+
+    <!-- Container do Chatbot (escondido por padrão) -->
+    <div id="chatbot-container" class="chatbot-container">
+        <div class="chatbot-header">
+            <h2 class="text-xl font-bold">Agente de IA</h2>
+            <button id="close-chatbot-btn" class="text-2xl">&times;</button>
+        </div>
+        <div id="chat-messages" class="flex-grow overflow-y-auto space-y-4 p-4">
+            <div class="flex justify-start">
+                <div class="bg-gray-800 text-white p-3 rounded-t-xl rounded-br-xl shadow-md max-w-[80%]">
+                    <p>Olá! Eu sou seu agente de IA da Vidal Design Solutions. Como posso ajudar você hoje?</p>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 flex items-center space-x-2 border-t border-gray-700">
+            <input type="text" id="user-input" class="flex-grow p-3 border border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400" placeholder="Digite sua mensagem...">
+            <button id="send-btn" class="bg-amber-500 hover:bg-amber-600 text-black font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 active:scale-95">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+
     <div class="container mx-auto p-4 md:p-8">
         
         <!-- Cabeçalho com Logo e Informações da Empresa -->
         <header class="text-center mb-10">
-             <div class="inline-block p-4 rounded-lg">
+            <div class="inline-block p-4 rounded-lg">
                 <!-- LOGOTIPO COM CAMINHO LOCAL -->
                 <img src="imagens/Logo.png" alt="Logo Vidal Design Solutions" class="mx-auto h-24">
             </div>
@@ -143,7 +222,7 @@
                         </select>
                     </div>
                 </div>
-                 <button id="addItemBtn" class="w-full md:w-auto mt-4 px-6 py-2 btn-primary rounded-md">
+                <button id="addItemBtn" class="w-full md:w-auto mt-4 px-6 py-2 btn-primary rounded-md">
                     <i class="fas fa-plus mr-2"></i>Adicionar Item
                 </button>
 
@@ -172,14 +251,14 @@
                         <input type="text" id="clientAddress" placeholder="Rua, Número, Bairro, Cidade" class="w-full p-2 rounded-md input-field">
                     </div>
                 </div>
-                 <div class="mt-4">
+                <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-300 mb-1">Opção de Entrega/Retirada</label>
                     <div class="flex flex-col md:flex-row gap-4 mt-2">
                         <label class="flex items-center space-x-2">
                             <input type="radio" name="delivery" value="retirada" checked class="h-4 w-4 text-amber-500 focus:ring-amber-400">
                             <span>Retirada no Balcão</span>
                         </label>
-                         <label class="flex items-center space-x-2">
+                        <label class="flex items-center space-x-2">
                             <input type="radio" name="delivery" value="motoboy" class="h-4 w-4 text-amber-500 focus:ring-amber-400">
                             <span>Entrega via Motoboy</span>
                         </label>
@@ -210,12 +289,12 @@
                         <input type="checkbox" id="cashDiscount" class="h-4 w-4 mt-1 text-amber-500 rounded focus:ring-amber-400">
                         <div class="ml-3 text-sm">
                             <label for="cashDiscount" class="font-medium text-white">Quero 5% de Desconto para Pagamento à Vista</label>
-                             <p class="text-gray-400">Válido para pagamentos em dinheiro ou PIX no fechamento do pedido.</p>
+                            <p class="text-gray-400">Válido para pagamentos em dinheiro ou PIX no fechamento do pedido.</p>
                         </div>
                     </div>
                 </div>
                 <div class="mt-6">
-                     <label for="installments" class="block text-sm font-medium text-gray-300 mb-1">Pagamento com Cartão de Crédito</label>
+                    <label for="installments" class="block text-sm font-medium text-gray-300 mb-1">Pagamento com Cartão de Crédito</label>
                     <select id="installments" class="w-full md:w-1/2 p-2 rounded-md input-field">
                         <option value="1">À vista no crédito (sem juros adicionais)</option>
                         <option value="2">2x</option>
@@ -234,7 +313,7 @@
                 </div>
             </section>
 
-             <div class="text-center mt-8">
+            <div class="text-center mt-8">
                 <button id="generateQuoteBtn" class="px-12 py-4 text-xl btn-primary rounded-lg shadow-lg">
                     <i class="fas fa-calculator mr-2"></i>Gerar Orçamento
                 </button>
@@ -246,10 +325,10 @@
     <div id="quoteModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
         <div id="printable-area" class="bg-card text-white rounded-lg shadow-2xl p-8 max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-start">
-                 <h2 class="text-3xl font-bold mb-4 text-amber-400">Seu Orçamento</h2>
-                 <button id="closeModalBtn" class="text-gray-400 hover:text-white text-2xl no-print">&times;</button>
+                <h2 class="text-3xl font-bold mb-4 text-amber-400">Seu Orçamento</h2>
+                <button id="closeModalBtn" class="text-gray-400 hover:text-white text-2xl no-print">&times;</button>
             </div>
-           
+            
             <div id="quoteResult" class="text-base">
                 <!-- Conteúdo do orçamento será injetado aqui -->
             </div>
@@ -258,14 +337,14 @@
                 <p class="text-sm text-gray-300 mb-4">
                     <strong>Prazos:</strong> Impressos de 2 a 3 dias úteis. Toldos 10 dias úteis.
                 </p>
-                 <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex flex-col md:flex-row gap-4">
                     <button id="sendWhatsAppBtn" class="flex-1 px-4 py-2 bg-green-500 text-white font-bold rounded-md hover:bg-green-600 transition-colors flex items-center justify-center">
                         <i class="fab fa-whatsapp mr-2"></i>Enviar via WhatsApp
                     </button>
                     <button id="printBtn" class="flex-1 px-4 py-2 btn-secondary rounded-md hover:bg-gray-600 transition-colors flex items-center justify-center">
                         <i class="fas fa-print mr-2"></i>Imprimir Orçamento
                     </button>
-                 </div>
+                </div>
             </div>
         </div>
     </div>
@@ -302,17 +381,17 @@
                 </div>
                 <!-- Coluna 4: Redes Sociais -->
                 <div>
-                     <h3 class="text-white text-lg font-semibold uppercase tracking-wider">Siga-nos</h3>
-                     <div class="flex mt-4 space-x-6 justify-center md:justify-start">
+                    <h3 class="text-white text-lg font-semibold uppercase tracking-wider">Siga-nos</h3>
+                    <div class="flex mt-4 space-x-6 justify-center md:justify-start">
                         <a href="https://www.facebook.com/share/1BqrEs4rEr/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-gray-400 hover:text-amber-400 transition-colors"><i class="fab fa-facebook-f fa-lg"></i></a>
                         <a href="https://www.instagram.com/vidaldesignsolutions?igsh=MTYxbTgxazY5ZzI1OQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-gray-400 hover:text-amber-400 transition-colors"><i class="fab fa-instagram fa-lg"></i></a>
                         <a href="https://api.whatsapp.com/send?phone=5511968649673" aria-label="WhatsApp" target="_blank" class="text-gray-400 hover:text-amber-400 transition-colors"><i class="fab fa-whatsapp fa-lg"></i></a>
-                     </div>
+                    </div>
                 </div>
             </div>
             <hr class="my-6 border-gray-700">
             <div class="text-center">
-                 <p class="text-sm">&copy; 2007 - <span id="currentYear"></span> VIDAL DESIGN SOLUTIONS. Todos os direitos reservados.</p>
+                <p class="text-sm">&copy; 2007 - <span id="currentYear"></span> VIDAL DESIGN SOLUTIONS. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
@@ -321,6 +400,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             
+            // --- CÓDIGO EXISTENTE DO GERADOR DE ORÇAMENTOS ---
+
             // --- DADOS E CONFIGURAÇÕES ---
             const materials = [
                 { id: "banner", name: "Banner", price: 120, type: 'area' },
@@ -428,7 +509,8 @@
                 const unit = unitSelect.value;
 
                 if (!material || isNaN(width) || width <= 0 || (material.type === 'area' && (isNaN(height) || height <= 0))) {
-                    alert('Por favor, preencha todos os campos com valores válidos e positivos (Material, Quantidade, Largura e Altura, se aplicável).');
+                    // Substituído o alert por um console.error para evitar interrupções.
+                    console.error('Por favor, preencha todos os campos com valores válidos e positivos (Material, Quantidade, Largura e Altura, se aplicável).');
                     return;
                 }
                 
@@ -500,7 +582,8 @@
 
             function handleGenerateQuote() {
                 if (quoteItems.length === 0) {
-                    alert('Adicione pelo menos um item ao orçamento.');
+                    // Substituído o alert por um console.error
+                    console.error('Adicione pelo menos um item ao orçamento.');
                     return;
                 }
 
@@ -572,14 +655,14 @@
 
                 resultHTML += `
                     <div class="space-y-1 text-right mt-4">
-                       <p>Subtotal dos Itens: <strong>${formatCurrency(subtotal)}</strong></p>
-                       <p>Entrega: _VALUE_</p>
-                       ${discountText}
+                        <p>Subtotal dos Itens: <strong>${formatCurrency(subtotal)}</strong></p>
+                        <p>Entrega: _VALUE_</p>
+                        ${discountText}
                     </div>
-                     <hr class="border-gray-600">
-                     <div class="text-right mt-2">
-                       ${paymentText}
-                     </div>
+                    <hr class="border-gray-600">
+                    <div class="text-right mt-2">
+                        ${paymentText}
+                    </div>
                 `.replace('_VALUE_', deliveryOption === 'motoboy' ? `<strong>${formatCurrency(deliveryFee)}</strong>` : `<strong>${deliveryText}</strong>`);
 
                 quoteResultDiv.innerHTML = resultHTML;
@@ -596,6 +679,169 @@
 
             // --- INICIA A APLICAÇÃO ---
             initialize();
+
+
+            // --- CÓDIGO DO AGENTE DE IA INTEGRADO ---
+            
+            // O chat history será usado para manter o contexto da conversa.
+            let chatHistory = [];
+            const chatContainer = document.getElementById('chatbot-container');
+            const chatMessages = document.getElementById('chat-messages');
+            const userInput = document.getElementById('user-input');
+            const sendBtn = document.getElementById('send-btn');
+            const chatToggleBtn = document.getElementById('chat-toggle-btn');
+            const closeChatbotBtn = document.getElementById('close-chatbot-btn');
+            let isWaitingForResponse = false;
+
+            // Função para "treinar" o chatbot com as informações da empresa.
+            function trainChatbotWithContext() {
+                const companyInfo = `
+                    Você é um agente de IA para a Vidal Design Solutions. Seu objetivo é ajudar os clientes a encontrar informações sobre a empresa, produtos, orçamentos e horários.
+                    
+                    --- Informações da Empresa ---
+                    - Nome: Vidal Design Solutions
+                    - Fundada em: 2007
+                    - Descrição: Soluções completas em comunicação visual, transformando ideias em realidade.
+                    - Endereço: Rua Antonio Cordeiro, 57 - São João, Mogi das Cruzes - SP, CEP: 08715-470
+                    - Telefone/WhatsApp: (11) 96864-9673
+                    - Horário de Funcionamento:
+                        - Segunda a Sexta: 09:00 às 18:00
+                        - Sábados: 08:00 às 13:00
+                        - Domingos e Feriados: Fechado
+                    - Produtos e Serviços:
+                        - Banner (área, R$ 120/m²)
+                        - Lona impressa com ilhós (área, R$ 100/m²)
+                        - Lona impressa simples (área, R$ 80/m²)
+                        - Adesivo recorte 1 cor (área, R$ 80/m²)
+                        - Adesivo recorte 2 cores (área, R$ 100/m²)
+                        - Adesivo recorte 1 cor + aplicação (área, R$ 120/m²)
+                        - Adesivo recorte 2 cores + aplicação (área, R$ 150/m²)
+                        - Adesivo personalizado impresso (área, R$ 100/m²)
+                        - Adesivo personalizado impresso + aplicação (área, R$ 150/m²)
+                        - Adesivo personalizado laminado (área, R$ 150/m²)
+                        - Kit toldo completo + instalação (linear, R$ 450/m)
+                        - Kit toldo completo sem instalação (linear, R$ 350/m)
+                        - Troca de lona toldo (área, R$ 230/m²)
+                    
+                    Seja prestativo e forneça as informações de forma clara e objetiva. Mantenha a conversa focada em assuntos da empresa.
+                `;
+
+                // Adiciona o contexto como a primeira mensagem (de sistema) no histórico.
+                chatHistory.push({ role: 'user', parts: [{ text: companyInfo }] });
+                chatHistory.push({ role: 'model', parts: [{ text: "Olá! Eu sou seu agente de IA da Vidal Design Solutions. Como posso ajudar você hoje?" }] });
+            }
+
+            // Adiciona uma mensagem ao chat UI.
+            function addChatMessage(text, sender) {
+                const messageWrapper = document.createElement('div');
+                const messageBubble = document.createElement('div');
+
+                if (sender === 'user') {
+                    messageWrapper.className = 'flex justify-end';
+                    messageBubble.className = 'bg-amber-600 text-white p-3 rounded-t-xl rounded-bl-xl shadow-md max-w-[80%]';
+                } else {
+                    messageWrapper.className = 'flex justify-start';
+                    messageBubble.className = 'bg-gray-800 text-white p-3 rounded-t-xl rounded-br-xl shadow-md max-w-[80%]';
+                }
+
+                messageBubble.innerText = text;
+                messageWrapper.appendChild(messageBubble);
+                chatMessages.appendChild(messageWrapper);
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Rola para a mensagem mais recente.
+            }
+
+            // Função para simular o "typing..."
+            function addLoadingIndicator() {
+                const loadingWrapper = document.createElement('div');
+                loadingWrapper.id = 'loading-indicator';
+                loadingWrapper.className = 'flex justify-start';
+                const loadingBubble = document.createElement('div');
+                loadingBubble.className = 'bg-gray-700 text-gray-400 p-3 rounded-t-xl rounded-br-xl shadow-md max-w-[80%] animate-pulse';
+                loadingBubble.innerText = 'Digitando...';
+                loadingWrapper.appendChild(loadingBubble);
+                chatMessages.appendChild(loadingWrapper);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Remove o indicador de "typing...".
+            function removeLoadingIndicator() {
+                const loadingIndicator = document.getElementById('loading-indicator');
+                if (loadingIndicator) {
+                    loadingIndicator.remove();
+                }
+            }
+
+            // Função principal para enviar a mensagem e receber a resposta da IA.
+            async function sendChatMessage() {
+                if (isWaitingForResponse) return;
+
+                const userText = userInput.value.trim();
+                if (userText === '') return;
+
+                isWaitingForResponse = true;
+                addChatMessage(userText, 'user');
+                userInput.value = '';
+                addLoadingIndicator();
+
+                try {
+                    // Adiciona a mensagem do usuário ao histórico do chat
+                    chatHistory.push({ role: 'user', parts: [{ text: userText }] });
+
+                    // Configura o payload para a API do Gemini
+                    const payload = { contents: chatHistory };
+                    const apiKey = ""; // A chave da API será fornecida pelo ambiente
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Falha na resposta da API');
+                    }
+
+                    const result = await response.json();
+                    
+                    // Extrai a resposta de texto do JSON.
+                    const geminiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    if (geminiResponse) {
+                        addChatMessage(geminiResponse, 'gemini');
+                        // Adiciona a resposta da IA ao histórico do chat.
+                        chatHistory.push({ role: 'model', parts: [{ text: geminiResponse }] });
+                    } else {
+                        addChatMessage('Desculpe, não consegui gerar uma resposta.', 'gemini');
+                    }
+
+                } catch (error) {
+                    console.error('Erro ao chamar a API:', error);
+                    addChatMessage('Houve um erro. Por favor, tente novamente.', 'gemini');
+                } finally {
+                    removeLoadingIndicator();
+                    isWaitingForResponse = false;
+                }
+            }
+            
+            // --- INICIALIZAÇÃO DO CHATBOT ---
+            trainChatbotWithContext(); // Chama a função para adicionar o contexto da empresa
+            
+            // Event listeners para o chatbot
+            chatToggleBtn.addEventListener('click', () => {
+                chatContainer.style.display = chatContainer.style.display === 'flex' ? 'none' : 'flex';
+            });
+
+            closeChatbotBtn.addEventListener('click', () => {
+                chatContainer.style.display = 'none';
+            });
+            
+            sendBtn.addEventListener('click', sendChatMessage);
+            userInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    sendChatMessage();
+                }
+            });
         });
     </script>
 
