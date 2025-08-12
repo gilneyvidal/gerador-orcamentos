@@ -1,856 +1,1205 @@
 <!DOCTYPE html>
+
 <html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Orçamentos - Vidal Design Solutions</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* Estilos personalizados para complementar o Tailwind */
-        body {
-            font-family: 'Roboto', sans-serif;
-            /* BACKGROUND ATUALIZADO COM CAMINHO LOCAL */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('imagens/background.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #ffffff;
-        }
-        .bg-card {
-            /* Adicionado transparência para integrar com o fundo */
-            background-color: rgba(26, 26, 26, 0.9);
-            backdrop-filter: blur(5px); /* Efeito de vidro para navegadores modernos */
-            -webkit-backdrop-filter: blur(5px);
-        }
-        .border-card {
-            border-color: #333333;
-        }
-        .btn-primary {
-            background-color: #d4af37; /* Dourado */
-            color: #000000;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        .btn-primary:hover {
-            background-color: #ffdf70;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
-        }
-        .btn-secondary {
-            background-color: #333333;
-            color: #ffffff;
-        }
-        .btn-secondary:hover {
-            background-color: #444444;
-        }
-        .input-field {
-            background-color: #333333;
-            border-color: #555555;
-            color: #ffffff;
-        }
-        .input-field:focus {
-            outline: none;
-            border-color: #d4af37;
-            box-shadow: 0 0 0 2px #d4af37;
-        }
-        .whatsapp-float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 40px;
-            right: 40px;
-            background-color: #25d366;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 3px #999;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        /* Estilos de Impressão */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #printable-area, #printable-area * {
-                visibility: visible;
-            }
-            #printable-area {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-            }
-            .no-print {
-                display: none;
-            }
-        }
 
-        /* Estilos do Chatbot */
-        .chatbot-container {
-            position: fixed;
-            bottom: 120px;
-            right: 40px;
-            z-index: 1000;
-            width: 350px;
-            height: 500px;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            display: none;
-            flex-direction: column;
-            background-color: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
+    <meta charset="UTF-8">
 
-        .chatbot-header {
-            background-color: #d4af37;
-            color: #000;
-            padding: 1rem;
-            border-top-left-radius: 1rem;
-            border-top-right-radius: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .chat-toggle-btn {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 40px;
-            right: 120px; /* Posicionamento para não sobrepor o WhatsApp */
-            background-color: #d4af37;
-            color: #000;
-            border-radius: 50%;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 3px #999;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .chat-toggle-btn:hover {
-            background-color: #ffdf70;
-            transform: translateY(-2px);
-        }
-    </style>
+    <title>Gerador de Orçamentos - Vidal Design Solutions</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* Estilos personalizados para complementar o Tailwind */
+
+        body {
+
+            font-family: 'Roboto', sans-serif;
+
+            /* BACKGROUND ATUALIZADO COM CAMINHO LOCAL */
+
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('imagens/background.jpg');
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-attachment: fixed;
+
+            color: #ffffff;
+
+        }
+
+        .bg-card {
+
+            /* Adicionado transparência para integrar com o fundo */
+
+            background-color: rgba(26, 26, 26, 0.9);
+
+            backdrop-filter: blur(5px); /* Efeito de vidro para navegadores modernos */
+
+            -webkit-backdrop-filter: blur(5px);
+
+        }
+
+        .border-card {
+
+            border-color: #333333;
+
+        }
+
+        .btn-primary {
+
+            background-color: #d4af37; /* Dourado */
+
+            color: #000000;
+
+            font-weight: bold;
+
+            transition: all 0.3s ease;
+
+        }
+
+        .btn-primary:hover {
+
+            background-color: #ffdf70;
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+
+        }
+
+        .btn-secondary {
+
+            background-color: #333333;
+
+            color: #ffffff;
+
+        }
+
+        .btn-secondary:hover {
+
+            background-color: #444444;
+
+        }
+
+        .input-field {
+
+            background-color: #333333;
+
+            border-color: #555555;
+
+            color: #ffffff;
+
+        }
+
+        .input-field:focus {
+
+            outline: none;
+
+            border-color: #d4af37;
+
+            box-shadow: 0 0 0 2px #d4af37;
+
+        }
+
+        .whatsapp-float {
+
+            position: fixed;
+
+            width: 60px;
+
+            height: 60px;
+
+            bottom: 40px;
+
+            right: 40px;
+
+            background-color: #25d366;
+
+            color: #FFF;
+
+            border-radius: 50px;
+
+            text-align: center;
+
+            font-size: 30px;
+
+            box-shadow: 2px 2px 3px #999;
+
+            z-index: 100;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+        /* Estilos de Impressão */
+
+        @media print {
+
+            body * {
+
+                visibility: hidden;
+
+            }
+
+            #printable-area, #printable-area * {
+
+                visibility: visible;
+
+            }
+
+            #printable-area {
+
+                position: absolute;
+
+                left: 0;
+
+                top: 0;
+
+                width: 100%;
+
+            }
+
+            .no-print {
+
+                display: none;
+
+            }
+
+        }
+
+    </style>
+
 </head>
+
 <body>
 
-    <!-- Link flutuante do WhatsApp -->
-    <a href="https://api.whatsapp.com/send?phone=5511968649673" class="whatsapp-float" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <!-- Botão flutuante para abrir o chatbot -->
-    <div id="chat-toggle-btn" class="chat-toggle-btn">
-        <i class="fas fa-comment-dots"></i>
-    </div>
-
-    <!-- Container do Chatbot (escondido por padrão) -->
-    <div id="chatbot-container" class="chatbot-container">
-        <div class="chatbot-header">
-            <h2 class="text-xl font-bold">Agente de IA</h2>
-            <button id="close-chatbot-btn" class="text-2xl">&times;</button>
-        </div>
-        <div id="chat-messages" class="flex-grow overflow-y-auto space-y-4 p-4">
-            <div class="flex justify-start">
-                <div class="bg-gray-800 text-white p-3 rounded-t-xl rounded-br-xl shadow-md max-w-[80%]">
-                    <p>Olá! Eu sou seu agente de IA da Vidal Design Solutions. Como posso ajudar você hoje?</p>
-                </div>
-            </div>
-        </div>
-        <div class="p-4 flex items-center space-x-2 border-t border-gray-700">
-            <input type="text" id="user-input" class="flex-grow p-3 border border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400" placeholder="Digite sua mensagem...">
-            <button id="send-btn" class="bg-amber-500 hover:bg-amber-600 text-black font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 active:scale-95">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </div>
-    </div>
 
 
-    <div class="container mx-auto p-4 md:p-8">
-        
-        <!-- Cabeçalho com Logo e Informações da Empresa -->
-        <header class="text-center mb-10">
-            <div class="inline-block p-4 rounded-lg">
-                <!-- LOGOTIPO COM CAMINHO LOCAL -->
-                <img src="imagens/Logo.png" alt="Logo Vidal Design Solutions" class="mx-auto h-24">
-            </div>
-            <p class="text-gray-200 mt-4 text-shadow">Rua Antonio Cordeiro, 57 - São João, Mogi das Cruzes - SP</p>
-            <p class="text-gray-200 text-shadow">CEP: 08715-470 | Tel/WhatsApp: (11) 96864-9673</p>
-        </header>
+    <!-- Link flutuante do WhatsApp -->
 
-        <main class="space-y-8">
-            <!-- Seção de Itens do Orçamento -->
-            <section class="bg-card border border-card rounded-lg p-6 shadow-lg">
-                <h2 class="text-2xl font-semibold mb-4 border-b border-gray-600 pb-2">1. Adicionar Itens ao Orçamento</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 items-end">
-                    <div class="lg:col-span-2">
-                        <label for="material" class="block text-sm font-medium text-gray-300 mb-1">Material</label>
-                        <select id="material" class="w-full p-2 rounded-md input-field">
-                            <!-- Opções serão populadas via JS -->
-                        </select>
-                    </div>
-                    <div>
-                        <label for="quantity" class="block text-sm font-medium text-gray-300 mb-1">Quantidade</label>
-                        <input type="number" id="quantity" value="1" min="1" class="w-full p-2 rounded-md input-field">
-                    </div>
-                    <div>
-                        <label for="width" class="block text-sm font-medium text-gray-300 mb-1">Largura/Comp.</label>
-                        <input type="number" id="width" placeholder="Ex: 1500" class="w-full p-2 rounded-md input-field">
-                    </div>
-                    <div>
-                        <label for="height" class="block text-sm font-medium text-gray-300 mb-1">Altura</label>
-                        <input type="number" id="height" placeholder="Ex: 1000" class="w-full p-2 rounded-md input-field">
-                    </div>
-                    <div>
-                        <label for="unit" class="block text-sm font-medium text-gray-300 mb-1">Unidade</label>
-                        <select id="unit" class="w-full p-2 rounded-md input-field">
-                            <option value="m">Metros (m)</option>
-                            <option value="cm">Centímetros (cm)</option>
-                            <option value="mm">Milímetros (mm)</option>
-                        </select>
-                    </div>
-                </div>
-                <button id="addItemBtn" class="w-full md:w-auto mt-4 px-6 py-2 btn-primary rounded-md">
-                    <i class="fas fa-plus mr-2"></i>Adicionar Item
-                </button>
+    <a href="https://api.whatsapp.com/send?phone=5511968649673" class="whatsapp-float" target="_blank">
 
-                <div id="quoteItems" class="mt-6">
-                    <h3 class="font-semibold text-lg mb-2">Itens do Orçamento:</h3>
-                    <div id="itemsList" class="space-y-2">
-                        <!-- Itens adicionados aparecerão aqui -->
-                    </div>
-                </div>
-            </section>
+        <i class="fab fa-whatsapp"></i>
 
-            <!-- Seção de Informações do Cliente e Entrega -->
-            <section class="bg-card border border-card rounded-lg p-6 shadow-lg">
-                <h2 class="text-2xl font-semibold mb-4 border-b border-gray-600 pb-2">2. Suas Informações e Entrega</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label for="clientName" class="block text-sm font-medium text-gray-300 mb-1">Seu Nome</label>
-                        <input type="text" id="clientName" placeholder="Nome Completo" class="w-full p-2 rounded-md input-field">
-                    </div>
-                    <div>
-                        <label for="clientPhone" class="block text-sm font-medium text-gray-300 mb-1">Telefone para Contato</label>
-                        <input type="text" id="clientPhone" placeholder="(11) 99999-9999" class="w-full p-2 rounded-md input-field">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label for="clientAddress" class="block text-sm font-medium text-gray-300 mb-1">Endereço (para entrega/instalação)</label>
-                        <input type="text" id="clientAddress" placeholder="Rua, Número, Bairro, Cidade" class="w-full p-2 rounded-md input-field">
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <label class="block text-sm font-medium text-gray-300 mb-1">Opção de Entrega/Retirada</label>
-                    <div class="flex flex-col md:flex-row gap-4 mt-2">
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="delivery" value="retirada" checked class="h-4 w-4 text-amber-500 focus:ring-amber-400">
-                            <span>Retirada no Balcão</span>
-                        </label>
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="delivery" value="motoboy" class="h-4 w-4 text-amber-500 focus:ring-amber-400">
-                            <span>Entrega via Motoboy</span>
-                        </label>
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="delivery" value="app" class="h-4 w-4 text-amber-500 focus:ring-amber-400">
-                            <span>App de Entregas (valor a consultar)</span>
-                        </label>
-                    </div>
-                </div>
-                <div id="cep-input-container" class="mt-4 hidden">
-                    <label for="clientCep" class="block text-sm font-medium text-gray-300 mb-1">Seu CEP (para cálculo da entrega)</label>
-                    <input type="text" id="clientCep" placeholder="00000-000" class="w-full md:w-1/2 p-2 rounded-md input-field">
-                </div>
-            </section>
-
-            <!-- Seção de Descontos e Pagamento -->
-            <section class="bg-card border border-card rounded-lg p-6 shadow-lg">
-                <h2 class="text-2xl font-semibold mb-4 border-b border-gray-600 pb-2">3. Descontos e Pagamento</h2>
-                <div class="space-y-4">
-                    <div class="flex items-start">
-                        <input type="checkbox" id="reviewDiscount" class="h-4 w-4 mt-1 text-amber-500 rounded focus:ring-amber-400">
-                        <div class="ml-3 text-sm">
-                            <label for="reviewDiscount" class="font-medium text-white">Quero 5% de Desconto por Avaliação</label>
-                            <p class="text-gray-400">Para validar, <a href="https://g.page/r/CXNPrWMbM0IZEBM/review" target="_blank" class="underline text-amber-400 hover:text-amber-300">avalie nossa empresa no Google</a> com 5 estrelas e envie o print da sua avaliação pelo WhatsApp.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <input type="checkbox" id="cashDiscount" class="h-4 w-4 mt-1 text-amber-500 rounded focus:ring-amber-400">
-                        <div class="ml-3 text-sm">
-                            <label for="cashDiscount" class="font-medium text-white">Quero 5% de Desconto para Pagamento à Vista</label>
-                            <p class="text-gray-400">Válido para pagamentos em dinheiro ou PIX no fechamento do pedido.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-6">
-                    <label for="installments" class="block text-sm font-medium text-gray-300 mb-1">Pagamento com Cartão de Crédito</label>
-                    <select id="installments" class="w-full md:w-1/2 p-2 rounded-md input-field">
-                        <option value="1">À vista no crédito (sem juros adicionais)</option>
-                        <option value="2">2x</option>
-                        <option value="3">3x</option>
-                        <option value="4">4x</option>
-                        <option value="5">5x</option>
-                        <option value="6">6x</option>
-                        <option value="7">7x</option>
-                        <option value="8">8x</option>
-                        <option value="9">9x</option>
-                        <option value="10">10x</option>
-                        <option value="11">11x</option>
-                        <option value="12">12x</option>
-                    </select>
-                    <p class="text-xs text-gray-400 mt-1">Juros da maquininha por conta do cliente. O valor final será ajustado.</p>
-                </div>
-            </section>
-
-            <div class="text-center mt-8">
-                <button id="generateQuoteBtn" class="px-12 py-4 text-xl btn-primary rounded-lg shadow-lg">
-                    <i class="fas fa-calculator mr-2"></i>Gerar Orçamento
-                </button>
-            </div>
-        </main>
-    </div>
-    
-    <!-- Modal do Orçamento -->
-    <div id="quoteModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
-        <div id="printable-area" class="bg-card text-white rounded-lg shadow-2xl p-8 max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-start">
-                <h2 class="text-3xl font-bold mb-4 text-amber-400">Seu Orçamento</h2>
-                <button id="closeModalBtn" class="text-gray-400 hover:text-white text-2xl no-print">&times;</button>
-            </div>
-            
-            <div id="quoteResult" class="text-base">
-                <!-- Conteúdo do orçamento será injetado aqui -->
-            </div>
-
-            <div class="mt-6 border-t border-gray-600 pt-4 no-print">
-                <p class="text-sm text-gray-300 mb-4">
-                    <strong>Prazos:</strong> Impressos de 2 a 3 dias úteis. Toldos 10 dias úteis.
-                </p>
-                <div class="flex flex-col md:flex-row gap-4">
-                    <button id="sendWhatsAppBtn" class="flex-1 px-4 py-2 bg-green-500 text-white font-bold rounded-md hover:bg-green-600 transition-colors flex items-center justify-center">
-                        <i class="fab fa-whatsapp mr-2"></i>Enviar via WhatsApp
-                    </button>
-                    <button id="printBtn" class="flex-1 px-4 py-2 btn-secondary rounded-md hover:bg-gray-600 transition-colors flex items-center justify-center">
-                        <i class="fas fa-print mr-2"></i>Imprimir Orçamento
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- RODAPÉ ATUALIZADO -->
-    <footer class="bg-card text-gray-400 mt-12 border-t border-gray-700 no-print">
-        <div class="container mx-auto px-6 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
-                <!-- Coluna 1: Sobre a Empresa -->
-                <div>
-                    <h3 class="text-white text-lg font-semibold uppercase tracking-wider" style="color: #d4af37;">Vidal Design Solutions</h3>
-                    <p class="mt-2">Soluções completas em comunicação visual, desde 2007, transformando ideias em realidade.</p>
-                </div>
-                <!-- Coluna 2: Contato -->
-                <div>
-                    <h3 class="text-white text-lg font-semibold uppercase tracking-wider">Contato</h3>
-                    <div class="mt-2 space-y-1">
-                        <p><i class="fas fa-map-marker-alt fa-fw mr-2"></i>Rua Antonio Cordeiro, 57</p>
-                        <p class="ml-6">Mogi das Cruzes, SP - 08715-470</p>
-                        <p><i class="fab fa-whatsapp fa-fw mr-2"></i>(11) 96864-9673</p>
-                        <a href="https://www.google.com/maps/search/?api=1&query=Rua+Antonio+Cordeiro,+57,+Mogi+das+Cruzes,+SP,08715-470" target="_blank" rel="noopener noreferrer" class="inline-block mt-2 px-4 py-2 text-sm btn-secondary rounded-md hover:bg-gray-600">
-                            <i class="fas fa-directions mr-2"></i>Como Chegar
-                        </a>
-                    </div>
-                </div>
-                <!-- Coluna 3: Horários -->
-                <div>
-                    <h3 class="text-white text-lg font-semibold uppercase tracking-wider">Funcionamento</h3>
-                    <div class="mt-2 space-y-1">
-                        <p><strong>Segunda a Sexta:</strong> 09:00 - 18:00</p>
-                        <p><strong>Sábados:</strong> 08:00 - 13:00</p>
-                        <p><strong>Domingos e Feriados:</strong> Fechado</p>
-                    </div>
-                </div>
-                <!-- Coluna 4: Redes Sociais -->
-                <div>
-                    <h3 class="text-white text-lg font-semibold uppercase tracking-wider">Siga-nos</h3>
-                    <div class="flex mt-4 space-x-6 justify-center md:justify-start">
-                        <a href="https://www.facebook.com/share/1BqrEs4rEr/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-gray-400 hover:text-amber-400 transition-colors"><i class="fab fa-facebook-f fa-lg"></i></a>
-                        <a href="https://www.instagram.com/vidaldesignsolutions?igsh=MTYxbTgxazY5ZzI1OQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-gray-400 hover:text-amber-400 transition-colors"><i class="fab fa-instagram fa-lg"></i></a>
-                        <a href="https://api.whatsapp.com/send?phone=5511968649673" aria-label="WhatsApp" target="_blank" class="text-gray-400 hover:text-amber-400 transition-colors"><i class="fab fa-whatsapp fa-lg"></i></a>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-6 border-gray-700">
-            <div class="text-center">
-                <p class="text-sm">&copy; 2007 - <span id="currentYear"></span> VIDAL DESIGN SOLUTIONS. Todos os direitos reservados.</p>
-            </div>
-        </div>
-    </footer>
+    </a>
 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            // --- CÓDIGO EXISTENTE DO GERADOR DE ORÇAMENTOS ---
 
-            // --- DADOS E CONFIGURAÇÕES ---
-            const materials = [
-                { id: "banner", name: "Banner", price: 120, type: 'area' },
-                { id: "lona_ilhos", name: "Lona impressa com ilhós", price: 100, type: 'area' },
-                { id: "lona_simples", name: "Lona impressa simples", price: 80, type: 'area' },
-                { id: "adesivo_recorte_1cor", name: "Adesivo recorte 1 cor", price: 80, type: 'area' },
-                { id: "adesivo_recorte_2cores", name: "Adesivo recorte 2 cores", price: 100, type: 'area' },
-                { id: "adesivo_recorte_1cor_app", name: "Adesivo recorte 1 cor + aplicação", price: 120, type: 'area' },
-                { id: "adesivo_recorte_2cores_app", name: "Adesivo recorte 2 cores + aplicação", price: 150, type: 'area' },
-                { id: "adesivo_impresso", name: "Adesivo personalizado impresso", price: 100, type: 'area' },
-                { id: "adesivo_impresso_app", name: "Adesivo personalizado impresso + aplicação", price: 150, type: 'area' },
-                { id: "adesivo_laminado", name: "Adesivo personalizado laminado", price: 150, type: 'area' },
-                { id: "toldo_completo_inst", name: "Kit toldo completo + instalação", price: 450, type: 'linear' },
-                { id: "toldo_completo_sem_inst", name: "Kit toldo completo sem instalação", price: 350, type: 'linear' },
-                // NOVO PRODUTO ADICIONADO AQUI
-                { id: "troca_lona_toldo", name: "Troca de lona toldo", price: 230, type: 'area' }
-            ];
+    <div class="container mx-auto p-4 md:p-8">
 
-            const installmentRates = {
-                1: 0,
-                2: 0.0394,
-                3: 0.0446, 4: 0.0446, 5: 0.0446,
-                6: 0.0899, 7: 0.0899, 8: 0.0899, 9: 0.0899, 10: 0.0899, 11: 0.0899, 12: 0.0899
-            };
+        
 
-            let quoteItems = [];
-            
-            // --- ELEMENTOS DO DOM ---
-            const materialSelect = document.getElementById('material');
-            const quantityInput = document.getElementById('quantity');
-            const widthInput = document.getElementById('width');
-            const heightInput = document.getElementById('height');
-            const unitSelect = document.getElementById('unit');
-            const addItemBtn = document.getElementById('addItemBtn');
-            const itemsListDiv = document.getElementById('itemsList');
-            const generateQuoteBtn = document.getElementById('generateQuoteBtn');
-            const quoteModal = document.getElementById('quoteModal');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const quoteResultDiv = document.getElementById('quoteResult');
-            const sendWhatsAppBtn = document.getElementById('sendWhatsAppBtn');
-            const printBtn = document.getElementById('printBtn');
-            const deliveryRadios = document.querySelectorAll('input[name="delivery"]');
-            const cepInputContainer = document.getElementById('cep-input-container');
+        <!-- Cabeçalho com Logo e Informações da Empresa -->
 
-            // --- INICIALIZAÇÃO ---
-            function initialize() {
-                materials.forEach(material => {
-                    const option = document.createElement('option');
-                    option.value = material.id;
-                    option.textContent = material.name;
-                    materialSelect.appendChild(option);
-                });
+        <header class="text-center mb-10">
 
-                document.getElementById('currentYear').textContent = new Date().getFullYear();
+             <div class="inline-block p-4 rounded-lg">
 
-                addItemBtn.addEventListener('click', handleAddItem);
-                generateQuoteBtn.addEventListener('click', handleGenerateQuote);
-                closeModalBtn.addEventListener('click', () => quoteModal.classList.add('hidden'));
-                printBtn.addEventListener('click', () => window.print());
-                sendWhatsAppBtn.addEventListener('click', handleSendWhatsApp);
-                itemsListDiv.addEventListener('click', handleRemoveItem);
-                
-                deliveryRadios.forEach(radio => {
-                    radio.addEventListener('change', (e) => {
-                        cepInputContainer.classList.toggle('hidden', e.target.value !== 'motoboy');
-                    });
-                });
-                
-                materialSelect.addEventListener('change', toggleHeightInput);
-                toggleHeightInput();
-            }
+                <!-- LOGOTIPO COM CAMINHO LOCAL -->
 
-            // --- FUNÇÕES DE LÓGICA ---
-            
-            function toggleHeightInput() {
-                const selectedMaterialId = materialSelect.value;
-                const material = materials.find(m => m.id === selectedMaterialId);
-                const isLinear = material && material.type === 'linear';
-                
-                heightInput.disabled = isLinear;
-                heightInput.value = isLinear ? '' : heightInput.value;
-                heightInput.placeholder = isLinear ? 'Não aplicável' : 'Ex: 1000';
-                heightInput.classList.toggle('bg-gray-700', isLinear);
-            }
-            
-            function convertToMeters(value, unit) {
-                if (unit === 'cm') return value / 100;
-                if (unit === 'mm') return value / 1000;
-                return value || 0;
-            }
-            
-            function formatCurrency(value) {
-                if (typeof value !== 'number' || isNaN(value)) {
-                    return (0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-                }
-                return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-            }
-            
-            function handleAddItem() {
-                const materialId = materialSelect.value;
-                const material = materials.find(m => m.id === materialId);
-                const quantity = parseInt(quantityInput.value, 10) || 1;
-                const width = parseFloat(widthInput.value);
-                const height = parseFloat(heightInput.value);
-                const unit = unitSelect.value;
+                <img src="imagens/Logo.png" alt="Logo Vidal Design Solutions" class="mx-auto h-24">
 
-                if (!material || isNaN(width) || width <= 0 || (material.type === 'area' && (isNaN(height) || height <= 0))) {
-                    // Substituído o alert por um console.error para evitar interrupções.
-                    console.error('Por favor, preencha todos os campos com valores válidos e positivos (Material, Quantidade, Largura e Altura, se aplicável).');
-                    return;
-                }
-                
-                const widthInMeters = convertToMeters(width, unit);
-                const heightInMeters = material.type === 'area' ? convertToMeters(height, unit) : 1;
-                
-                const item = {
-                    id: Date.now(),
-                    materialId: material.id,
-                    name: material.name,
-                    pricePerUnit: material.price,
-                    type: material.type,
-                    quantity: quantity,
-                    width: widthInMeters,
-                    height: heightInMeters,
-                    unit: unit,
-                    originalWidth: width,
-                    originalHeight: height,
-                };
-                
-                if (material.type === 'linear') {
-                    item.size = widthInMeters;
-                    item.display = `${quantity}x ${material.name} (${width}${unit})`;
-                } else {
-                    item.size = widthInMeters * heightInMeters;
-                    item.display = `${quantity}x ${material.name} (${width}${unit} x ${height}${unit})`;
-                }
+            </div>
 
-                quoteItems.push(item);
-                renderQuoteItems();
-                
-                widthInput.value = '';
-                heightInput.value = '';
-                quantityInput.value = '1';
-            }
+            <p class="text-gray-200 mt-4 text-shadow">Rua Antonio Cordeiro, 57 - São João, Mogi das Cruzes - SP</p>
 
-            function handleRemoveItem(event) {
-                if (event.target.classList.contains('remove-item-btn')) {
-                    const itemId = parseInt(event.target.dataset.id, 10);
-                    quoteItems = quoteItems.filter(item => item.id !== itemId);
-                    renderQuoteItems();
-                }
-            }
-            
-            function renderQuoteItems() {
-                itemsListDiv.innerHTML = '';
-                if (quoteItems.length === 0) {
-                    itemsListDiv.innerHTML = '<p class="text-gray-400">Nenhum item adicionado.</p>';
-                    return;
-                }
-                
-                quoteItems.forEach(item => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'flex justify-between items-center p-2 bg-gray-800 rounded-md';
-                    itemDiv.innerHTML = `
-                        <span>${item.display}</span>
-                        <button data-id="${item.id}" class="remove-item-btn text-red-500 hover:text-red-400 font-bold text-xl px-2">&times;</button>
-                    `;
-                    itemsListDiv.appendChild(itemDiv);
-                });
-            }
-            
-            function calculateDeliveryFee(cep) {
-                if (!cep || cep.length < 8) return 0;
-                const simulatedDistance = Math.random() * (30 - 3) + 3;
-                const fee = simulatedDistance * 2.00;
-                return Math.max(7.00, fee);
-            }
+            <p class="text-gray-200 text-shadow">CEP: 08715-470 | Tel/WhatsApp: (11) 96864-9673</p>
 
-            function handleGenerateQuote() {
-                if (quoteItems.length === 0) {
-                    // Substituído o alert por um console.error
-                    console.error('Adicione pelo menos um item ao orçamento.');
-                    return;
-                }
-
-                const clientName = document.getElementById('clientName').value || "Não informado";
-                const clientPhone = document.getElementById('clientPhone').value || "Não informado";
-                const clientAddress = document.getElementById('clientAddress').value || "Não informado";
-                
-                let subtotal = 0;
-                let resultHTML = `
-                    <div class="space-y-4">
-                        <p><strong>Cliente:</strong> ${clientName}</p>
-                        <p><strong>Contato:</strong> ${clientPhone}</p>
-                        <p><strong>Endereço:</strong> ${clientAddress}</p>
-                        <hr class="border-gray-600">
-                        <h4 class="font-bold text-lg">Itens do Orçamento:</h4>
-                        <div class="space-y-3">
-                `;
-                
-                quoteItems.forEach(item => {
-                    const material = materials.find(m => m.id === item.materialId);
-                    if (!material) return;
-                    const itemPrice = item.size * material.price * item.quantity;
-                    subtotal += itemPrice;
-
-                    resultHTML += `
-                        <div class="p-2 bg-gray-800 rounded-md flex justify-between items-center">
-                            <span>${item.display}</span>
-                            <strong>${formatCurrency(itemPrice)}</strong>
-                        </div>
-                    `;
-                });
-
-                resultHTML += `</div> <hr class="border-gray-600 mt-4">`;
-
-                const deliveryOption = document.querySelector('input[name="delivery"]:checked').value;
-                const clientCep = document.getElementById('clientCep').value;
-                let deliveryFee = 0;
-                let deliveryText = "Retirada no balcão";
-                if (deliveryOption === 'motoboy') {
-                    deliveryFee = calculateDeliveryFee(clientCep);
-                    deliveryText = `Entrega via Motoboy (CEP: ${clientCep || 'não informado'})`;
-                    if (deliveryFee === 0 && clientCep) deliveryText += " - Erro ao calcular. A combinar.";
-                } else if (deliveryOption === 'app') {
-                    deliveryFee = 0;
-                    deliveryText = "Entrega via App (valor a consultar)";
-                }
-
-                let total = subtotal + deliveryFee;
-                let discountText = "";
-                let discountPercentage = 0;
-                if (document.getElementById('reviewDiscount').checked) discountPercentage += 5;
-                if (document.getElementById('cashDiscount').checked) discountPercentage += 5;
-                
-                const discountValue = total * (discountPercentage / 100);
-                if (discountValue > 0) {
-                    total -= discountValue;
-                    discountText = `<p class="text-green-400">Descontos aplicados (${discountPercentage}%): -${formatCurrency(discountValue)}</p>`;
-                }
-                
-                const installments = parseInt(document.getElementById('installments').value, 10);
-                let paymentText = `<p class="text-2xl font-bold">Total: ${formatCurrency(total)}</p>`;
-                if (installments > 1 && !document.getElementById('cashDiscount').checked) {
-                    const rate = installmentRates[installments];
-                    const finalValue = total * (1 + rate);
-                    const installmentValue = finalValue / installments;
-                    paymentText = `<p class="text-lg">Cartão de Crédito: <strong>${installments}x de ${formatCurrency(installmentValue)}</strong></p>`;
-                    paymentText += `<p class="text-2xl font-bold">Total Parcelado: ${formatCurrency(finalValue)}</p>`;
-                }
-
-                resultHTML += `
-                    <div class="space-y-1 text-right mt-4">
-                        <p>Subtotal dos Itens: <strong>${formatCurrency(subtotal)}</strong></p>
-                        <p>Entrega: _VALUE_</p>
-                        ${discountText}
-                    </div>
-                    <hr class="border-gray-600">
-                    <div class="text-right mt-2">
-                        ${paymentText}
-                    </div>
-                `.replace('_VALUE_', deliveryOption === 'motoboy' ? `<strong>${formatCurrency(deliveryFee)}</strong>` : `<strong>${deliveryText}</strong>`);
-
-                quoteResultDiv.innerHTML = resultHTML;
-                quoteModal.classList.remove('hidden');
-            }
-            
-            function handleSendWhatsApp() {
-                const quoteText = quoteResultDiv.innerText;
-                const fullMessage = `Olá! Gostaria de um orçamento:\n\n${quoteText}\n\n--- Fim do Orçamento ---`;
-                const encodedMessage = encodeURIComponent(fullMessage);
-                const whatsappUrl = `https://api.whatsapp.com/send?phone=5511968649673&text=${encodedMessage}`;
-                window.open(whatsappUrl, '_blank');
-            }
-
-            // --- INICIA A APLICAÇÃO ---
-            initialize();
+        </header>
 
 
-            // --- CÓDIGO DO AGENTE DE IA INTEGRADO ---
-            
-            // O chat history será usado para manter o contexto da conversa.
-            let chatHistory = [];
-            const chatContainer = document.getElementById('chatbot-container');
-            const chatMessages = document.getElementById('chat-messages');
-            const userInput = document.getElementById('user-input');
-            const sendBtn = document.getElementById('send-btn');
-            const chatToggleBtn = document.getElementById('chat-toggle-btn');
-            const closeChatbotBtn = document.getElementById('close-chatbot-btn');
-            let isWaitingForResponse = false;
 
-            // Função para "treinar" o chatbot com as informações da empresa.
-            function trainChatbotWithContext() {
-                const companyInfo = `
-                    Você é um agente de IA para a Vidal Design Solutions. Seu objetivo é ajudar os clientes a encontrar informações sobre a empresa, produtos, orçamentos e horários.
-                    
-                    --- Informações da Empresa ---
-                    - Nome: Vidal Design Solutions
-                    - Fundada em: 2007
-                    - Descrição: Soluções completas em comunicação visual, transformando ideias em realidade.
-                    - Endereço: Rua Antonio Cordeiro, 57 - São João, Mogi das Cruzes - SP, CEP: 08715-470
-                    - Telefone/WhatsApp: (11) 96864-9673
-                    - Horário de Funcionamento:
-                        - Segunda a Sexta: 09:00 às 18:00
-                        - Sábados: 08:00 às 13:00
-                        - Domingos e Feriados: Fechado
-                    - Produtos e Serviços:
-                        - Banner (área, R$ 120/m²)
-                        - Lona impressa com ilhós (área, R$ 100/m²)
-                        - Lona impressa simples (área, R$ 80/m²)
-                        - Adesivo recorte 1 cor (área, R$ 80/m²)
-                        - Adesivo recorte 2 cores (área, R$ 100/m²)
-                        - Adesivo recorte 1 cor + aplicação (área, R$ 120/m²)
-                        - Adesivo recorte 2 cores + aplicação (área, R$ 150/m²)
-                        - Adesivo personalizado impresso (área, R$ 100/m²)
-                        - Adesivo personalizado impresso + aplicação (área, R$ 150/m²)
-                        - Adesivo personalizado laminado (área, R$ 150/m²)
-                        - Kit toldo completo + instalação (linear, R$ 450/m)
-                        - Kit toldo completo sem instalação (linear, R$ 350/m)
-                        - Troca de lona toldo (área, R$ 230/m²)
-                    
-                    Seja prestativo e forneça as informações de forma clara e objetiva. Mantenha a conversa focada em assuntos da empresa.
-                `;
+        <main class="space-y-8">
 
-                // Adiciona o contexto como a primeira mensagem (de sistema) no histórico.
-                chatHistory.push({ role: 'user', parts: [{ text: companyInfo }] });
-                chatHistory.push({ role: 'model', parts: [{ text: "Olá! Eu sou seu agente de IA da Vidal Design Solutions. Como posso ajudar você hoje?" }] });
-            }
+            <!-- Seção de Itens do Orçamento -->
 
-            // Adiciona uma mensagem ao chat UI.
-            function addChatMessage(text, sender) {
-                const messageWrapper = document.createElement('div');
-                const messageBubble = document.createElement('div');
+            <section class="bg-card border border-card rounded-lg p-6 shadow-lg">
 
-                if (sender === 'user') {
-                    messageWrapper.className = 'flex justify-end';
-                    messageBubble.className = 'bg-amber-600 text-white p-3 rounded-t-xl rounded-bl-xl shadow-md max-w-[80%]';
-                } else {
-                    messageWrapper.className = 'flex justify-start';
-                    messageBubble.className = 'bg-gray-800 text-white p-3 rounded-t-xl rounded-br-xl shadow-md max-w-[80%]';
-                }
+                <h2 class="text-2xl font-semibold mb-4 border-b border-gray-600 pb-2">1. Adicionar Itens ao Orçamento</h2>
 
-                messageBubble.innerText = text;
-                messageWrapper.appendChild(messageBubble);
-                chatMessages.appendChild(messageWrapper);
-                chatMessages.scrollTop = chatMessages.scrollHeight; // Rola para a mensagem mais recente.
-            }
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 items-end">
 
-            // Função para simular o "typing..."
-            function addLoadingIndicator() {
-                const loadingWrapper = document.createElement('div');
-                loadingWrapper.id = 'loading-indicator';
-                loadingWrapper.className = 'flex justify-start';
-                const loadingBubble = document.createElement('div');
-                loadingBubble.className = 'bg-gray-700 text-gray-400 p-3 rounded-t-xl rounded-br-xl shadow-md max-w-[80%] animate-pulse';
-                loadingBubble.innerText = 'Digitando...';
-                loadingWrapper.appendChild(loadingBubble);
-                chatMessages.appendChild(loadingWrapper);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
+                    <div class="lg:col-span-2">
 
-            // Remove o indicador de "typing...".
-            function removeLoadingIndicator() {
-                const loadingIndicator = document.getElementById('loading-indicator');
-                if (loadingIndicator) {
-                    loadingIndicator.remove();
-                }
-            }
+                        <label for="material" class="block text-sm font-medium text-gray-300 mb-1">Material</label>
 
-            // Função principal para enviar a mensagem e receber a resposta da IA.
-            async function sendChatMessage() {
-                if (isWaitingForResponse) return;
+                        <select id="material" class="w-full p-2 rounded-md input-field">
 
-                const userText = userInput.value.trim();
-                if (userText === '') return;
+                            <!-- Opções serão populadas via JS -->
 
-                isWaitingForResponse = true;
-                addChatMessage(userText, 'user');
-                userInput.value = '';
-                addLoadingIndicator();
+                        </select>
 
-                try {
-                    // Adiciona a mensagem do usuário ao histórico do chat
-                    chatHistory.push({ role: 'user', parts: [{ text: userText }] });
+                    </div>
 
-                    // Configura o payload para a API do Gemini
-                    const payload = { contents: chatHistory };
-                    // A chave da API é lida de uma variável global, que você deve definir
-                    // no seu ambiente de build ou servidor.
-                    const apiKey = window.API_KEY; 
-                    if (!apiKey) {
-                        throw new Error('A chave de API não foi configurada. Por favor, adicione a variável de ambiente.');
-                    }
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                    <div>
 
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
+                        <label for="quantity" class="block text-sm font-medium text-gray-300 mb-1">Quantidade</label>
 
-                    if (!response.ok) {
-                        // Trata o erro de forma mais detalhada
-                        const errorData = await response.json();
-                        throw new Error(`Falha na resposta da API: ${response.status} - ${errorData?.error?.message}`);
-                    }
+                        <input type="number" id="quantity" value="1" min="1" class="w-full p-2 rounded-md input-field">
 
-                    const result = await response.json();
-                    
-                    // Extrai a resposta de texto do JSON.
-                    const geminiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    </div>
 
-                    if (geminiResponse) {
-                        addChatMessage(geminiResponse, 'gemini');
-                        // Adiciona a resposta da IA ao histórico do chat.
-                        chatHistory.push({ role: 'model', parts: [{ text: geminiResponse }] });
-                    } else {
-                        addChatMessage('Desculpe, não consegui gerar uma resposta.', 'gemini');
-                    }
+                    <div>
 
-                } catch (error) {
-                    console.error('Erro ao chamar a API:', error);
-                    addChatMessage('Houve um erro. Por favor, tente novamente.', 'gemini');
-                } finally {
-                    removeLoadingIndicator();
-                    isWaitingForResponse = false;
-                }
-            }
-            
-            // --- INICIALIZAÇÃO DO CHATBOT ---
-            trainChatbotWithContext(); // Chama a função para adicionar o contexto da empresa
-            
-            // Event listeners para o chatbot
-            chatToggleBtn.addEventListener('click', () => {
-                chatContainer.style.display = chatContainer.style.display === 'flex' ? 'none' : 'flex';
-            });
+                        <label for="width" class="block text-sm font-medium text-gray-300 mb-1">Largura/Comp.</label>
 
-            closeChatbotBtn.addEventListener('click', () => {
-                chatContainer.style.display = 'none';
-            });
-            
-            sendBtn.addEventListener('click', sendChatMessage);
-            userInput.addEventListener('keypress', (event) => {
-                if (event.key === 'Enter') {
-                    sendChatMessage();
-                }
-            });
-        });
-    </script>
+                        <input type="number" id="width" placeholder="Ex: 1500" class="w-full p-2 rounded-md input-field">
+
+                    </div>
+
+                    <div>
+
+                        <label for="height" class="block text-sm font-medium text-gray-300 mb-1">Altura</label>
+
+                        <input type="number" id="height" placeholder="Ex: 1000" class="w-full p-2 rounded-md input-field">
+
+                    </div>
+
+                    <div>
+
+                        <label for="unit" class="block text-sm font-medium text-gray-300 mb-1">Unidade</label>
+
+                        <select id="unit" class="w-full p-2 rounded-md input-field">
+
+                            <option value="m">Metros (m)</option>
+
+                            <option value="cm">Centímetros (cm)</option>
+
+                            <option value="mm">Milímetros (mm)</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                 <button id="addItemBtn" class="w-full md:w-auto mt-4 px-6 py-2 btn-primary rounded-md">
+
+                    <i class="fas fa-plus mr-2"></i>Adicionar Item
+
+                </button>
+
+
+
+                <div id="quoteItems" class="mt-6">
+
+                    <h3 class="font-semibold text-lg mb-2">Itens do Orçamento:</h3>
+
+                    <div id="itemsList" class="space-y-2">
+
+                        <!-- Itens adicionados aparecerão aqui -->
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- Seção de Informações do Cliente e Entrega -->
+
+            <section class="bg-card border border-card rounded-lg p-6 shadow-lg">
+
+                <h2 class="text-2xl font-semibold mb-4 border-b border-gray-600 pb-2">2. Suas Informações e Entrega</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                    <div>
+
+                        <label for="clientName" class="block text-sm font-medium text-gray-300 mb-1">Seu Nome</label>
+
+                        <input type="text" id="clientName" placeholder="Nome Completo" class="w-full p-2 rounded-md input-field">
+
+                    </div>
+
+                    <div>
+
+                        <label for="clientPhone" class="block text-sm font-medium text-gray-300 mb-1">Telefone para Contato</label>
+
+                        <input type="text" id="clientPhone" placeholder="(11) 99999-9999" class="w-full p-2 rounded-md input-field">
+
+                    </div>
+
+                    <div class="md:col-span-2">
+
+                        <label for="clientAddress" class="block text-sm font-medium text-gray-300 mb-1">Endereço (para entrega/instalação)</label>
+
+                        <input type="text" id="clientAddress" placeholder="Rua, Número, Bairro, Cidade" class="w-full p-2 rounded-md input-field">
+
+                    </div>
+
+                </div>
+
+                 <div class="mt-4">
+
+                    <label class="block text-sm font-medium text-gray-300 mb-1">Opção de Entrega/Retirada</label>
+
+                    <div class="flex flex-col md:flex-row gap-4 mt-2">
+
+                        <label class="flex items-center space-x-2">
+
+                            <input type="radio" name="delivery" value="retirada" checked class="h-4 w-4 text-amber-500 focus:ring-amber-400">
+
+                            <span>Retirada no Balcão</span>
+
+                        </label>
+
+                         <label class="flex items-center space-x-2">
+
+                            <input type="radio" name="delivery" value="motoboy" class="h-4 w-4 text-amber-500 focus:ring-amber-400">
+
+                            <span>Entrega via Motoboy</span>
+
+                        </label>
+
+                        <label class="flex items-center space-x-2">
+
+                            <input type="radio" name="delivery" value="app" class="h-4 w-4 text-amber-500 focus:ring-amber-400">
+
+                            <span>App de Entregas (valor a consultar)</span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <div id="cep-input-container" class="mt-4 hidden">
+
+                    <label for="clientCep" class="block text-sm font-medium text-gray-300 mb-1">Seu CEP (para cálculo da entrega)</label>
+
+                    <input type="text" id="clientCep" placeholder="00000-000" class="w-full md:w-1/2 p-2 rounded-md input-field">
+
+                </div>
+
+            </section>
+
+
+
+            <!-- Seção de Descontos e Pagamento -->
+
+            <section class="bg-card border border-card rounded-lg p-6 shadow-lg">
+
+                <h2 class="text-2xl font-semibold mb-4 border-b border-gray-600 pb-2">3. Descontos e Pagamento</h2>
+
+                <div class="space-y-4">
+
+                    <div class="flex items-start">
+
+                        <input type="checkbox" id="reviewDiscount" class="h-4 w-4 mt-1 text-amber-500 rounded focus:ring-amber-400">
+
+                        <div class="ml-3 text-sm">
+
+                            <label for="reviewDiscount" class="font-medium text-white">Quero 5% de Desconto por Avaliação</label>
+
+                            <p class="text-gray-400">Para validar, <a href="https://g.page/r/CXNPrWMbM0IZEBM/review" target="_blank" class="underline text-amber-400 hover:text-amber-300">avalie nossa empresa no Google</a> com 5 estrelas e envie o print da sua avaliação pelo WhatsApp.</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="flex items-start">
+
+                        <input type="checkbox" id="cashDiscount" class="h-4 w-4 mt-1 text-amber-500 rounded focus:ring-amber-400">
+
+                        <div class="ml-3 text-sm">
+
+                            <label for="cashDiscount" class="font-medium text-white">Quero 5% de Desconto para Pagamento à Vista</label>
+
+                             <p class="text-gray-400">Válido para pagamentos em dinheiro ou PIX no fechamento do pedido.</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="mt-6">
+
+                     <label for="installments" class="block text-sm font-medium text-gray-300 mb-1">Pagamento com Cartão de Crédito</label>
+
+                    <select id="installments" class="w-full md:w-1/2 p-2 rounded-md input-field">
+
+                        <option value="1">À vista no crédito (sem juros adicionais)</option>
+
+                        <option value="2">2x</option>
+
+                        <option value="3">3x</option>
+
+                        <option value="4">4x</option>
+
+                        <option value="5">5x</option>
+
+                        <option value="6">6x</option>
+
+                        <option value="7">7x</option>
+
+                        <option value="8">8x</option>
+
+                        <option value="9">9x</option>
+
+                        <option value="10">10x</option>
+
+                        <option value="11">11x</option>
+
+                        <option value="12">12x</option>
+
+                    </select>
+
+                    <p class="text-xs text-gray-400 mt-1">Juros da maquininha por conta do cliente. O valor final será ajustado.</p>
+
+                </div>
+
+            </section>
+
+
+
+             <div class="text-center mt-8">
+
+                <button id="generateQuoteBtn" class="px-12 py-4 text-xl btn-primary rounded-lg shadow-lg">
+
+                    <i class="fas fa-calculator mr-2"></i>Gerar Orçamento
+
+                </button>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    
+
+    <!-- Modal do Orçamento -->
+
+    <div id="quoteModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+
+        <div id="printable-area" class="bg-card text-white rounded-lg shadow-2xl p-8 max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+
+            <div class="flex justify-between items-start">
+
+                 <h2 class="text-3xl font-bold mb-4 text-amber-400">Seu Orçamento</h2>
+
+                 <button id="closeModalBtn" class="text-gray-400 hover:text-white text-2xl no-print">&times;</button>
+
+            </div>
+
+           
+
+            <div id="quoteResult" class="text-base">
+
+                <!-- Conteúdo do orçamento será injetado aqui -->
+
+            </div>
+
+
+
+            <div class="mt-6 border-t border-gray-600 pt-4 no-print">
+
+                <p class="text-sm text-gray-300 mb-4">
+
+                    <strong>Prazos:</strong> Impressos de 2 a 3 dias úteis. Toldos 10 dias úteis.
+
+                </p>
+
+                 <div class="flex flex-col md:flex-row gap-4">
+
+                    <button id="sendWhatsAppBtn" class="flex-1 px-4 py-2 bg-green-500 text-white font-bold rounded-md hover:bg-green-600 transition-colors flex items-center justify-center">
+
+                        <i class="fab fa-whatsapp mr-2"></i>Enviar via WhatsApp
+
+                    </button>
+
+                    <button id="printBtn" class="flex-1 px-4 py-2 btn-secondary rounded-md hover:bg-gray-600 transition-colors flex items-center justify-center">
+
+                        <i class="fas fa-print mr-2"></i>Imprimir Orçamento
+
+                    </button>
+
+                 </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- RODAPÉ ATUALIZADO -->
+
+    <footer class="bg-card text-gray-400 mt-12 border-t border-gray-700 no-print">
+
+        <div class="container mx-auto px-6 py-8">
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
+
+                <!-- Coluna 1: Sobre a Empresa -->
+
+                <div>
+
+                    <h3 class="text-white text-lg font-semibold uppercase tracking-wider" style="color: #d4af37;">Vidal Design Solutions</h3>
+
+                    <p class="mt-2">Soluções completas em comunicação visual, desde 2007, transformando ideias em realidade.</p>
+
+                </div>
+
+                <!-- Coluna 2: Contato -->
+
+                <div>
+
+                    <h3 class="text-white text-lg font-semibold uppercase tracking-wider">Contato</h3>
+
+                    <div class="mt-2 space-y-1">
+
+                        <p><i class="fas fa-map-marker-alt fa-fw mr-2"></i>Rua Antonio Cordeiro, 57</p>
+
+                        <p class="ml-6">Mogi das Cruzes, SP - 08715-470</p>
+
+                        <p><i class="fab fa-whatsapp fa-fw mr-2"></i>(11) 96864-9673</p>
+
+                        <a href="https://www.google.com/maps/search/?api=1&query=Rua+Antonio+Cordeiro,+57,+Mogi+das+Cruzes,+SP,08715-470" target="_blank" rel="noopener noreferrer" class="inline-block mt-2 px-4 py-2 text-sm btn-secondary rounded-md hover:bg-gray-600">
+
+                            <i class="fas fa-directions mr-2"></i>Como Chegar
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <!-- Coluna 3: Horários -->
+
+                <div>
+
+                    <h3 class="text-white text-lg font-semibold uppercase tracking-wider">Funcionamento</h3>
+
+                    <div class="mt-2 space-y-1">
+
+                        <p><strong>Segunda a Sexta:</strong> 09:00 - 18:00</p>
+
+                        <p><strong>Sábados:</strong> 08:00 - 13:00</p>
+
+                        <p><strong>Domingos e Feriados:</strong> Fechado</p>
+
+                    </div>
+
+                </div>
+
+                <!-- Coluna 4: Redes Sociais -->
+
+                <div>
+
+                     <h3 class="text-white text-lg font-semibold uppercase tracking-wider">Siga-nos</h3>
+
+                     <div class="flex mt-4 space-x-6 justify-center md:justify-start">
+
+                        <a href="https://www.facebook.com/share/1BqrEs4rEr/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-gray-400 hover:text-amber-400 transition-colors"><i class="fab fa-facebook-f fa-lg"></i></a>
+
+                        <a href="https://www.instagram.com/vidaldesignsolutions?igsh=MTYxbTgxazY5ZzI1OQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-gray-400 hover:text-amber-400 transition-colors"><i class="fab fa-instagram fa-lg"></i></a>
+
+                        <a href="https://api.whatsapp.com/send?phone=5511968649673" aria-label="WhatsApp" target="_blank" class="text-gray-400 hover:text-amber-400 transition-colors"><i class="fab fa-whatsapp fa-lg"></i></a>
+
+                     </div>
+
+                </div>
+
+            </div>
+
+            <hr class="my-6 border-gray-700">
+
+            <div class="text-center">
+
+                 <p class="text-sm">&copy; 2007 - <span id="currentYear"></span> VIDAL DESIGN SOLUTIONS. Todos os direitos reservados.</p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            
+
+            // --- DADOS E CONFIGURAÇÕES ---
+
+            const materials = [
+
+                { id: "banner", name: "Banner", price: 120, type: 'area' },
+
+                { id: "lona_ilhos", name: "Lona impressa com ilhós", price: 100, type: 'area' },
+
+                { id: "lona_simples", name: "Lona impressa simples", price: 80, type: 'area' },
+
+                { id: "adesivo_recorte_1cor", name: "Adesivo recorte 1 cor", price: 80, type: 'area' },
+
+                { id: "adesivo_recorte_2cores", name: "Adesivo recorte 2 cores", price: 100, type: 'area' },
+
+                { id: "adesivo_recorte_1cor_app", name: "Adesivo recorte 1 cor + aplicação", price: 120, type: 'area' },
+
+                { id: "adesivo_recorte_2cores_app", name: "Adesivo recorte 2 cores + aplicação", price: 150, type: 'area' },
+
+                { id: "adesivo_impresso", name: "Adesivo personalizado impresso", price: 100, type: 'area' },
+
+                { id: "adesivo_impresso_app", name: "Adesivo personalizado impresso + aplicação", price: 150, type: 'area' },
+
+                { id: "adesivo_laminado", name: "Adesivo personalizado laminado", price: 150, type: 'area' },
+
+                { id: "toldo_completo_inst", name: "Kit toldo completo + instalação", price: 450, type: 'linear' },
+
+                { id: "toldo_completo_sem_inst", name: "Kit toldo completo sem instalação", price: 350, type: 'linear' },
+
+                // NOVO PRODUTO ADICIONADO AQUI
+
+                { id: "troca_lona_toldo", name: "Troca de lona toldo", price: 230, type: 'area' }
+
+            ];
+
+
+
+            const installmentRates = {
+
+                1: 0,
+
+                2: 0.0394,
+
+                3: 0.0446, 4: 0.0446, 5: 0.0446,
+
+                6: 0.0899, 7: 0.0899, 8: 0.0899, 9: 0.0899, 10: 0.0899, 11: 0.0899, 12: 0.0899
+
+            };
+
+
+
+            let quoteItems = [];
+
+            
+
+            // --- ELEMENTOS DO DOM ---
+
+            const materialSelect = document.getElementById('material');
+
+            const quantityInput = document.getElementById('quantity');
+
+            const widthInput = document.getElementById('width');
+
+            const heightInput = document.getElementById('height');
+
+            const unitSelect = document.getElementById('unit');
+
+            const addItemBtn = document.getElementById('addItemBtn');
+
+            const itemsListDiv = document.getElementById('itemsList');
+
+            const generateQuoteBtn = document.getElementById('generateQuoteBtn');
+
+            const quoteModal = document.getElementById('quoteModal');
+
+            const closeModalBtn = document.getElementById('closeModalBtn');
+
+            const quoteResultDiv = document.getElementById('quoteResult');
+
+            const sendWhatsAppBtn = document.getElementById('sendWhatsAppBtn');
+
+            const printBtn = document.getElementById('printBtn');
+
+            const deliveryRadios = document.querySelectorAll('input[name="delivery"]');
+
+            const cepInputContainer = document.getElementById('cep-input-container');
+
+
+
+            // --- INICIALIZAÇÃO ---
+
+            function initialize() {
+
+                materials.forEach(material => {
+
+                    const option = document.createElement('option');
+
+                    option.value = material.id;
+
+                    option.textContent = material.name;
+
+                    materialSelect.appendChild(option);
+
+                });
+
+
+
+                document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+
+
+                addItemBtn.addEventListener('click', handleAddItem);
+
+                generateQuoteBtn.addEventListener('click', handleGenerateQuote);
+
+                closeModalBtn.addEventListener('click', () => quoteModal.classList.add('hidden'));
+
+                printBtn.addEventListener('click', () => window.print());
+
+                sendWhatsAppBtn.addEventListener('click', handleSendWhatsApp);
+
+                itemsListDiv.addEventListener('click', handleRemoveItem);
+
+                
+
+                deliveryRadios.forEach(radio => {
+
+                    radio.addEventListener('change', (e) => {
+
+                        cepInputContainer.classList.toggle('hidden', e.target.value !== 'motoboy');
+
+                    });
+
+                });
+
+                
+
+                materialSelect.addEventListener('change', toggleHeightInput);
+
+                toggleHeightInput();
+
+            }
+
+
+
+            // --- FUNÇÕES DE LÓGICA ---
+
+            
+
+            function toggleHeightInput() {
+
+                const selectedMaterialId = materialSelect.value;
+
+                const material = materials.find(m => m.id === selectedMaterialId);
+
+                const isLinear = material && material.type === 'linear';
+
+                
+
+                heightInput.disabled = isLinear;
+
+                heightInput.value = isLinear ? '' : heightInput.value;
+
+                heightInput.placeholder = isLinear ? 'Não aplicável' : 'Ex: 1000';
+
+                heightInput.classList.toggle('bg-gray-700', isLinear);
+
+            }
+
+            
+
+            function convertToMeters(value, unit) {
+
+                if (unit === 'cm') return value / 100;
+
+                if (unit === 'mm') return value / 1000;
+
+                return value || 0;
+
+            }
+
+            
+
+            function formatCurrency(value) {
+
+                if (typeof value !== 'number' || isNaN(value)) {
+
+                    return (0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+                }
+
+                return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+            }
+
+            
+
+            function handleAddItem() {
+
+                const materialId = materialSelect.value;
+
+                const material = materials.find(m => m.id === materialId);
+
+                const quantity = parseInt(quantityInput.value, 10) || 1;
+
+                const width = parseFloat(widthInput.value);
+
+                const height = parseFloat(heightInput.value);
+
+                const unit = unitSelect.value;
+
+
+
+                if (!material || isNaN(width) || width <= 0 || (material.type === 'area' && (isNaN(height) || height <= 0))) {
+
+                    alert('Por favor, preencha todos os campos com valores válidos e positivos (Material, Quantidade, Largura e Altura, se aplicável).');
+
+                    return;
+
+                }
+
+                
+
+                const widthInMeters = convertToMeters(width, unit);
+
+                const heightInMeters = material.type === 'area' ? convertToMeters(height, unit) : 1;
+
+                
+
+                const item = {
+
+                    id: Date.now(),
+
+                    materialId: material.id,
+
+                    name: material.name,
+
+                    pricePerUnit: material.price,
+
+                    type: material.type,
+
+                    quantity: quantity,
+
+                    width: widthInMeters,
+
+                    height: heightInMeters,
+
+                    unit: unit,
+
+                    originalWidth: width,
+
+                    originalHeight: height,
+
+                };
+
+                
+
+                if (material.type === 'linear') {
+
+                    item.size = widthInMeters;
+
+                    item.display = `${quantity}x ${material.name} (${width}${unit})`;
+
+                } else {
+
+                    item.size = widthInMeters * heightInMeters;
+
+                    item.display = `${quantity}x ${material.name} (${width}${unit} x ${height}${unit})`;
+
+                }
+
+
+
+                quoteItems.push(item);
+
+                renderQuoteItems();
+
+                
+
+                widthInput.value = '';
+
+                heightInput.value = '';
+
+                quantityInput.value = '1';
+
+            }
+
+
+
+            function handleRemoveItem(event) {
+
+                if (event.target.classList.contains('remove-item-btn')) {
+
+                    const itemId = parseInt(event.target.dataset.id, 10);
+
+                    quoteItems = quoteItems.filter(item => item.id !== itemId);
+
+                    renderQuoteItems();
+
+                }
+
+            }
+
+            
+
+            function renderQuoteItems() {
+
+                itemsListDiv.innerHTML = '';
+
+                if (quoteItems.length === 0) {
+
+                    itemsListDiv.innerHTML = '<p class="text-gray-400">Nenhum item adicionado.</p>';
+
+                    return;
+
+                }
+
+                
+
+                quoteItems.forEach(item => {
+
+                    const itemDiv = document.createElement('div');
+
+                    itemDiv.className = 'flex justify-between items-center p-2 bg-gray-800 rounded-md';
+
+                    itemDiv.innerHTML = `
+
+                        <span>${item.display}</span>
+
+                        <button data-id="${item.id}" class="remove-item-btn text-red-500 hover:text-red-400 font-bold text-xl px-2">&times;</button>
+
+                    `;
+
+                    itemsListDiv.appendChild(itemDiv);
+
+                });
+
+            }
+
+            
+
+            function calculateDeliveryFee(cep) {
+
+                if (!cep || cep.length < 8) return 0;
+
+                const simulatedDistance = Math.random() * (30 - 3) + 3;
+
+                const fee = simulatedDistance * 2.00;
+
+                return Math.max(7.00, fee);
+
+            }
+
+
+
+            function handleGenerateQuote() {
+
+                if (quoteItems.length === 0) {
+
+                    alert('Adicione pelo menos um item ao orçamento.');
+
+                    return;
+
+                }
+
+
+
+                const clientName = document.getElementById('clientName').value || "Não informado";
+
+                const clientPhone = document.getElementById('clientPhone').value || "Não informado";
+
+                const clientAddress = document.getElementById('clientAddress').value || "Não informado";
+
+                
+
+                let subtotal = 0;
+
+                let resultHTML = `
+
+                    <div class="space-y-4">
+
+                        <p><strong>Cliente:</strong> ${clientName}</p>
+
+                        <p><strong>Contato:</strong> ${clientPhone}</p>
+
+                        <p><strong>Endereço:</strong> ${clientAddress}</p>
+
+                        <hr class="border-gray-600">
+
+                        <h4 class="font-bold text-lg">Itens do Orçamento:</h4>
+
+                        <div class="space-y-3">
+
+                `;
+
+                
+
+                quoteItems.forEach(item => {
+
+                    const material = materials.find(m => m.id === item.materialId);
+
+                    if (!material) return;
+
+                    const itemPrice = item.size * material.price * item.quantity;
+
+                    subtotal += itemPrice;
+
+
+
+                    resultHTML += `
+
+                        <div class="p-2 bg-gray-800 rounded-md flex justify-between items-center">
+
+                            <span>${item.display}</span>
+
+                            <strong>${formatCurrency(itemPrice)}</strong>
+
+                        </div>
+
+                    `;
+
+                });
+
+
+
+                resultHTML += `</div> <hr class="border-gray-600 mt-4">`;
+
+
+
+                const deliveryOption = document.querySelector('input[name="delivery"]:checked').value;
+
+                const clientCep = document.getElementById('clientCep').value;
+
+                let deliveryFee = 0;
+
+                let deliveryText = "Retirada no balcão";
+
+                if (deliveryOption === 'motoboy') {
+
+                    deliveryFee = calculateDeliveryFee(clientCep);
+
+                    deliveryText = `Entrega via Motoboy (CEP: ${clientCep || 'não informado'})`;
+
+                    if (deliveryFee === 0 && clientCep) deliveryText += " - Erro ao calcular. A combinar.";
+
+                } else if (deliveryOption === 'app') {
+
+                    deliveryFee = 0;
+
+                    deliveryText = "Entrega via App (valor a consultar)";
+
+                }
+
+
+
+                let total = subtotal + deliveryFee;
+
+                let discountText = "";
+
+                let discountPercentage = 0;
+
+                if (document.getElementById('reviewDiscount').checked) discountPercentage += 5;
+
+                if (document.getElementById('cashDiscount').checked) discountPercentage += 5;
+
+                
+
+                const discountValue = total * (discountPercentage / 100);
+
+                if (discountValue > 0) {
+
+                    total -= discountValue;
+
+                    discountText = `<p class="text-green-400">Descontos aplicados (${discountPercentage}%): -${formatCurrency(discountValue)}</p>`;
+
+                }
+
+                
+
+                const installments = parseInt(document.getElementById('installments').value, 10);
+
+                let paymentText = `<p class="text-2xl font-bold">Total: ${formatCurrency(total)}</p>`;
+
+                if (installments > 1 && !document.getElementById('cashDiscount').checked) {
+
+                    const rate = installmentRates[installments];
+
+                    const finalValue = total * (1 + rate);
+
+                    const installmentValue = finalValue / installments;
+
+                    paymentText = `<p class="text-lg">Cartão de Crédito: <strong>${installments}x de ${formatCurrency(installmentValue)}</strong></p>`;
+
+                    paymentText += `<p class="text-2xl font-bold">Total Parcelado: ${formatCurrency(finalValue)}</p>`;
+
+                }
+
+
+
+                resultHTML += `
+
+                    <div class="space-y-1 text-right mt-4">
+
+                       <p>Subtotal dos Itens: <strong>${formatCurrency(subtotal)}</strong></p>
+
+                       <p>Entrega: _VALUE_</p>
+
+                       ${discountText}
+
+                    </div>
+
+                     <hr class="border-gray-600">
+
+                     <div class="text-right mt-2">
+
+                       ${paymentText}
+
+                     </div>
+
+                `.replace('_VALUE_', deliveryOption === 'motoboy' ? `<strong>${formatCurrency(deliveryFee)}</strong>` : `<strong>${deliveryText}</strong>`);
+
+
+
+                quoteResultDiv.innerHTML = resultHTML;
+
+                quoteModal.classList.remove('hidden');
+
+            }
+
+            
+
+            function handleSendWhatsApp() {
+
+                const quoteText = quoteResultDiv.innerText;
+
+                const fullMessage = `Olá! Gostaria de um orçamento:\n\n${quoteText}\n\n--- Fim do Orçamento ---`;
+
+                const encodedMessage = encodeURIComponent(fullMessage);
+
+                const whatsappUrl = `https://api.whatsapp.com/send?phone=5511968649673&text=${encodedMessage}`;
+
+                window.open(whatsappUrl, '_blank');
+
+            }
+
+
+
+            // --- INICIA A APLICAÇÃO ---
+
+            initialize();
+
+        });
+
+    </script>
+
+
 
 </body>
+
 </html>
