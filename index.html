@@ -789,7 +789,8 @@
 
                     // Configura o payload para a API do Gemini
                     const payload = { contents: chatHistory };
-                    const apiKey = ""; // A chave da API será fornecida pelo ambiente
+                    // A chave da API é agora uma variável
+                    const apiKey = "AIzaSyD6AJ0MWvv5x14PnUyEdGkaYTpJ1eQuoB4"; 
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
                     const response = await fetch(apiUrl, {
@@ -799,7 +800,9 @@
                     });
 
                     if (!response.ok) {
-                        throw new Error('Falha na resposta da API');
+                        // Trata o erro de forma mais detalhada
+                        const errorData = await response.json();
+                        throw new Error(`Falha na resposta da API: ${response.status} - ${errorData?.error?.message}`);
                     }
 
                     const result = await response.json();
