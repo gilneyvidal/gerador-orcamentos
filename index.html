@@ -789,8 +789,12 @@
 
                     // Configura o payload para a API do Gemini
                     const payload = { contents: chatHistory };
-                    // A chave da API é agora uma variável
-                    const apiKey = "AIzaSyD6AJ0MWvv5x14PnUyEdGkaYTpJ1eQuoB4"; 
+                    // A chave da API é lida de uma variável global, que você deve definir
+                    // no seu ambiente de build ou servidor.
+                    const apiKey = window.API_KEY; 
+                    if (!apiKey) {
+                        throw new Error('A chave de API não foi configurada. Por favor, adicione a variável de ambiente.');
+                    }
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
                     const response = await fetch(apiUrl, {
