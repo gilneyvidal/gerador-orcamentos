@@ -8,7 +8,1107 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-…        };
+    <!-- Google Fonts: Orbitron for titles, Inter for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        /* Custom styles to extend Tailwind */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark gray background */
+            background-image: radial-gradient(circle at top right, rgba(252, 238, 9, 0.05), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.05), transparent 50%);
+            background-attachment: fixed;
+            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+        }
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+        /* Custom scrollbar for a more modern look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fcee09;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4c908;
+        }
+        
+        /* Scroll-triggered fade-in animation */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animated background elements */
+        .background-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .background-shapes span {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(252, 238, 9, 0.1); /* Yellow accent color */
+            animation: float 25s linear infinite;
+            bottom: -150px;
+        }
+        .background-shapes span:nth-child(2) { left: 10%; width: 80px; height: 80px; animation-delay: 2s; animation-duration: 17s; background: rgba(59, 130, 246, 0.1); }
+        .background-shapes span:nth-child(3) { left: 20%; width: 20px; height: 20px; animation-delay: 4s; }
+        .background-shapes span:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; background: rgba(59, 130, 246, 0.1); border-radius: 50%; }
+        .background-shapes span:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+        .background-shapes span:nth-child(6) { left: 75%; width: 110px; height: 110px; animation-delay: 3s; background: rgba(252, 238, 9, 0.05); border-radius: 50%;}
+        .background-shapes span:nth-child(7) { left: 35%; width: 150px; height: 150px; animation-delay: 7s; background: rgba(59, 130, 246, 0.1); }
+        .background-shapes span:nth-child(8) { left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
+        .background-shapes span:nth-child(9) { left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 35s; border-radius: 50%; }
+        .background-shapes span:nth-child(10) { left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; background: rgba(252, 238, 9, 0.1); }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="text-gray-300">
+
+    <!-- Animated background container -->
+    <div class="background-shapes">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- EDITABLE ITEM: Header Section -->
+    <!-- Instructions: The logo is embedded. Navigation links and search functionality are below. -->
+    <header class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex justify-between items-center flex-wrap gap-4">
+            <a href="index.html" class="reveal-on-scroll is-visible">
+                <!-- Logo embedded as Base64 to avoid broken links -->
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAA8CAMAAACuNL9AAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADNQTFRF////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0k7+bAAAAA50Uk5T//+A/zD/ECAwUK9wz79A7wAAAb1JREFUeNrs3NtygyAUhWFpZSA5/v+3XQ+aE8M2aNl2t72vF8hYpYQkSVIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIk-inZ-30" alt="Vidal Design Logo" class="w-48 md:w-64">
+            </a>
+            <div class="flex items-center gap-4 reveal-on-scroll is-visible" style="transition-delay: 0.2s;">
+                <nav class="hidden md:flex items-center gap-4">
+                    <a href="index.html" title="Home" class="hover:text-yellow-400 transition-colors duration-300">Home</a>
+                    <a href="produtos.html" title="Produtos" class="hover:text-yellow-400 transition-colors duration-300">Produtos</a>
+                    <a href="destaques.html" title="Destaques" class="hover:text-yellow-400 transition-colors duration-300">Destaques</a>
+                    <a href="contato.html" title="Contato" class="hover:text-yellow-400 transition-colors duration-300">Contato</a>
+                </nav>
+                <div class="relative">
+                    <input type="text" placeholder="Buscar..." class="bg-gray-800 border border-gray-600 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition w-40 md:w-56">
+                    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+                    </button>
+                </div>
+                <div id="cart-icon" class="relative cursor-pointer group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-300 group-hover:text-yellow-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <span id="header-cart-count" class="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-gray-900">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- EDITABLE ITEM: Categories Bar -->
+    <!-- Instructions: Links to product sections. You can add or remove categories here. -->
+    <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 reveal-on-scroll is-visible" style="transition-delay: 0.4s;">
+        <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 border border-gray-700">
+            <div class="flex justify-center items-center flex-wrap gap-x-6 gap-y-2">
+                <a href="#impressos" class="font-semibold hover:text-yellow-400 transition-colors">Impressos</a>
+                <span class="text-gray-600 hidden sm:inline">|</span>
+                <a href="#adesivos" class="font-semibold hover:text-yellow-400 transition-colors">Adesivos</a>
+                <span class="text-gray-600 hidden sm:inline">|</span>
+                <a href="#banners" class="font-semibold hover:text-yellow-400 transition-colors">Banners e Faixas</a>
+                 <span class="text-gray-600 hidden sm:inline">|</span>
+                <a href="#toldos" class="font-semibold hover:text-yellow-400 transition-colors">Toldos</a>
+                 <span class="text-gray-600 hidden sm:inline">|</span>
+                <a href="#camisetas" class="font-semibold hover:text-yellow-400 transition-colors">Camisetas</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <section class="bg-[#2a2a2e] rounded-2xl p-6 md:p-10 shadow-2xl">
+            <h2 class="font-orbitron text-3xl md:text-5xl text-center text-white mb-10 reveal-on-scroll">Nossos Produtos</h2>
+
+            <!-- EDITABLE ITEM: Products Section -->
+            <!-- Instructions: Each product category is in a section. You can edit product details, prices, and images. -->
+            
+            <!-- Category: Impressos -->
+            <div id="impressos" class="mb-12">
+                <h3 class="font-orbitron text-2xl md:text-3xl text-yellow-400 border-b-2 border-yellow-400/50 pb-3 mb-8 reveal-on-scroll">Impressos</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Product Card: Couché Fosco com Verniz -->
+                    <div class="product-card bg-gray-100 text-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col transition-transform duration-300 hover:scale-105 reveal-on-scroll" data-id="cv-fosco-verniz" data-name="Cartão de Visita - Couché Fosco 300g com Verniz">
+                        <img src="https://placehold.co/600x400/1f2937/fcee09?text=Cartão+com+Verniz" alt="Imagem de Cartão de Visita com Verniz" class="w-full h-48 object-cover">
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h4 class="font-orbitron text-lg font-bold">Couché Fosco 300g c/ Verniz</h4>
+                            <p class="text-sm text-gray-600 mt-1 mb-4 flex-grow">Laminação Fosca e Verniz Localizado (frente e verso), 88x48mm.</p>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Quantidade</label>
+                                <select class="quantity-select w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <option value="171.98">100 unidades</option>
+                                    <option value="177.98">500 unidades</option>
+                                    <option value="215.98">1.000 unidades</option>
+                                    <option value="947.98">5.000 unidades</option>
+                                    <option value="1841.98">10.000 unidades</option>
+                                    <option value="3603.98">20.000 unidades</option>
+                                </select>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="product-price text-3xl font-bold text-gray-800 mb-3">R$ 171,98</div>
+                                <div class="flex gap-2">
+                                    <button class="add-to-cart-btn bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                    <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="cv-fosco-verniz">Galeria</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Card: Couché 300g (4x0) -->
+                    <div class="product-card bg-gray-100 text-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col transition-transform duration-300 hover:scale-105 reveal-on-scroll" data-id="cv-4x0" data-name="Cartão de Visita - Couché 300g (4x0)">
+                        <img src="https://placehold.co/600x400/1f2937/fcee09?text=Cartão+Simples" alt="Imagem de Cartão de Visita Simples" class="w-full h-48 object-cover">
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h4 class="font-orbitron text-lg font-bold">Couché 300g (4x0)</h4>
+                            <p class="text-sm text-gray-600 mt-1 mb-4 flex-grow">Impressão colorida na frente, sem enobrecimento, 88x48mm.</p>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Quantidade</label>
+                                <select class="quantity-select w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <option value="65.98">50 unidades</option>
+                                    <option value="75.98">100 unidades</option>
+                                    <option value="87.98">200 unidades</option>
+                                    <option value="105.98">300 unidades</option>
+                                    <option value="151.98">500 unidades</option>
+                                    <option value="155.98">1.000 unidades</option>
+                                    <option value="641.98">5.000 unidades</option>
+                                    <option value="1225.98">10.000 unidades</option>
+                                    <option value="2367.98">20.000 unidades</option>
+                                </select>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="product-price text-3xl font-bold text-gray-800 mb-3">R$ 65,98</div>
+                                <div class="flex gap-2">
+                                    <button class="add-to-cart-btn bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                    <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="cv-4x0">Galeria</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Card: Couché 300g (4x4) -->
+                    <div class="product-card bg-gray-100 text-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col transition-transform duration-300 hover:scale-105 reveal-on-scroll" data-id="cv-4x4" data-name="Cartão de Visita - Couché 300g (4x4)">
+                        <img src="https://placehold.co/600x400/1f2937/fcee09?text=Cartão+Frente+e+Verso" alt="Imagem de Cartão de Visita Frente e Verso" class="w-full h-48 object-cover">
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h4 class="font-orbitron text-lg font-bold">Couché 300g (4x4)</h4>
+                            <p class="text-sm text-gray-600 mt-1 mb-4 flex-grow">Impressão colorida frente e verso, sem enobrecimento, 88x48mm.</p>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Quantidade</label>
+                                <select class="quantity-select w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <option value="73.98">50 unidades</option>
+                                    <option value="91.98">100 unidades</option>
+                                    <option value="115.98">200 unidades</option>
+                                    <option value="141.98">300 unidades</option>
+                                    <option value="173.98">400 unidades</option>
+                                    <option value="153.98">500 unidades</option>
+                                    <option value="157.98">1.000 unidades</option>
+                                    <option value="651.98">5.000 unidades</option>
+                                    <option value="1245.98">10.000 unidades</option>
+                                    <option value="2405.98">20.000 unidades</option>
+                                </select>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="product-price text-3xl font-bold text-gray-800 mb-3">R$ 73,98</div>
+                                <div class="flex gap-2">
+                                    <button class="add-to-cart-btn bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                    <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="cv-4x4">Galeria</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- NEW Product Card: Couché Brilho 250g (4x0) -->
+                    <div class="product-card bg-gray-100 text-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col transition-transform duration-300 hover:scale-105 reveal-on-scroll" data-id="cv-brilho-4x0" data-name="Cartão de Visita - Couché Brilho 250g (4x0)">
+                        <img src="https://placehold.co/600x400/1f2937/fcee09?text=Cartão+Brilho" alt="Imagem de Cartão de Visita com Verniz Total" class="w-full h-48 object-cover">
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h4 class="font-orbitron text-lg font-bold">Couché Brilho 250g (4x0)</h4>
+                            <p class="text-sm text-gray-600 mt-1 mb-4 flex-grow">Verniz Total Brilho na frente, 88x48mm.</p>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Quantidade</label>
+                                <select class="quantity-select w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <option value="81.98">100 unidades</option>
+                                    <option value="83.98">500 unidades</option>
+                                    <option value="111.98">1.000 unidades</option>
+                                    <option value="197.98">2.000 unidades</option>
+                                    <option value="281.98">3.000 unidades</option>
+                                    <option value="365.98">4.000 unidades</option>
+                                    <option value="445.98">5.000 unidades</option>
+                                    <option value="853.98">10.000 unidades</option>
+                                    <option value="1659.98">20.000 unidades</option>
+                                </select>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="product-price text-3xl font-bold text-gray-800 mb-3">R$ 81,98</div>
+                                <div class="flex gap-2">
+                                    <button class="add-to-cart-btn bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                    <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="cv-brilho-4x0">Galeria</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- NEW Product Card: Couché Brilho 250g (4x4) -->
+                    <div class="product-card bg-gray-100 text-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col transition-transform duration-300 hover:scale-105 reveal-on-scroll" data-id="cv-brilho-4x4" data-name="Cartão de Visita - Couché Brilho 250g (4x4)">
+                        <img src="https://placehold.co/600x400/1f2937/fcee09?text=Cartão+Brilho+F/V" alt="Imagem de Cartão de Visita com Verniz Total Frente e Verso" class="w-full h-48 object-cover">
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h4 class="font-orbitron text-lg font-bold">Couché Brilho 250g (4x4)</h4>
+                            <p class="text-sm text-gray-600 mt-1 mb-4 flex-grow">Verniz Total Brilho na frente, 88x48mm.</p>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Quantidade</label>
+                                <select class="quantity-select w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <option value="105.98">500 unidades</option>
+                                    <option value="127.98">1.000 unidades</option>
+                                    <option value="329.98">3.000 unidades</option>
+                                    <option value="431.98">4.000 unidades</option>
+                                    <option value="527.98">5.000 unidades</option>
+                                    <option value="1019.98">10.000 unidades</option>
+                                    <option value="1995.98">20.000 unidades</option>
+                                </select>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="product-price text-3xl font-bold text-gray-800 mb-3">R$ 105,98</div>
+                                <div class="flex gap-2">
+                                    <button class="add-to-cart-btn bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                    <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="cv-brilho-4x4">Galeria</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Card: Folheto 4x0 -->
+                    <div class="product-card bg-gray-100 text-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col transition-transform duration-300 hover:scale-105 reveal-on-scroll" data-id="folheto-4x0" data-name="Folheto - Couché Brilho 90g (4x0)">
+                        <img src="https://placehold.co/600x400/1f2937/fcee09?text=Folheto" alt="Imagem de Folheto" class="w-full h-48 object-cover">
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h4 class="font-orbitron text-lg font-bold">Folheto Couché 90g (4x0)</h4>
+                            <p class="text-sm text-gray-600 mt-1 mb-4 flex-grow">Formato 100x140mm, impressão colorida na frente.</p>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Quantidade</label>
+                                <select class="quantity-select w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <option value="193.98">1.000 unidades</option>
+                                    <option value="271.98">2.500 unidades</option>
+                                    <option value="411.98">5.000 unidades</option>
+                                    <option value="735.98">10.000 unidades</option>
+                                    <option value="1425.98">20.000 unidades</option>
+                                    <option value="2115.98">30.000 unidades</option>
+                                    <option value="3483.98">50.000 unidades</option>
+                                </select>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="product-price text-3xl font-bold text-gray-800 mb-3">R$ 193,98</div>
+                                <div class="flex gap-2">
+                                    <button class="add-to-cart-btn bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                    <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="folheto-4x0">Galeria</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Card: Folheto 4x4 -->
+                    <div class="product-card bg-gray-100 text-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col transition-transform duration-300 hover:scale-105 reveal-on-scroll" data-id="folheto-4x4" data-name="Folheto - Couché Brilho 90g (4x4)">
+                        <img src="https://placehold.co/600x400/1f2937/fcee09?text=Folheto+F/V" alt="Imagem de Folheto Frente e Verso" class="w-full h-48 object-cover">
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h4 class="font-orbitron text-lg font-bold">Folheto Couché 90g (4x4)</h4>
+                            <p class="text-sm text-gray-600 mt-1 mb-4 flex-grow">Formato 100x140mm, impressão colorida frente e verso.</p>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Quantidade</label>
+                                <select class="quantity-select w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <option value="223.98">1.000 unidades</option>
+                                    <option value="299.98">2.500 unidades</option>
+                                    <option value="467.98">5.000 unidades</option>
+                                    <option value="815.98">10.000 unidades</option>
+                                    <option value="1585.98">20.000 unidades</option>
+                                    <option value="2357.98">30.000 unidades</option>
+                                    <option value="3887.98">50.000 unidades</option>
+                                </select>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="product-price text-3xl font-bold text-gray-800 mb-3">R$ 223,98</div>
+                                <div class="flex gap-2">
+                                    <button class="add-to-cart-btn bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                    <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="folheto-4x4">Galeria</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category: Adesivos e Rótulos -->
+            <div id="adesivos" class="mb-12">
+                <h3 class="font-orbitron text-2xl md:text-3xl text-yellow-400 border-b-2 border-yellow-400/50 pb-3 mb-8 reveal-on-scroll">Adesivos e Rótulos</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Custom Product Card: Adesivo Impresso -->
+                    <div class="custom-product-card bg-gray-100 text-gray-900 rounded-lg p-5 shadow-lg flex flex-col reveal-on-scroll" data-id="adesivo-impresso" data-name="Adesivo Impresso" data-price-m2="100.00" data-type="area">
+                        <h4 class="font-orbitron text-lg font-bold mb-4">Adesivo Impresso</h4>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div><label class="block text-sm font-medium mb-1">Altura (cm)</label><input type="number" class="custom-height w-full p-2 border border-gray-300 rounded-md" min="1"></div>
+                            <div><label class="block text-sm font-medium mb-1">Largura (cm)</label><input type="number" class="custom-width w-full p-2 border border-gray-300 rounded-md" min="1"></div>
+                        </div>
+                        <div class="mb-4"><label class="block text-sm font-medium mb-1">Quantidade</label><input type="number" class="custom-quantity w-full p-2 border border-gray-300 rounded-md" value="1" min="1"></div>
+                        <div class="mt-auto">
+                            <div class="calculated-price text-3xl font-bold text-center h-10 mb-3"></div>
+                            <div class="flex gap-2">
+                                <button class="add-to-cart-btn custom bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="adesivo-impresso">Galeria</button>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Custom Product Card: Adesivo Recorte -->
+                    <div class="custom-product-card bg-gray-100 text-gray-900 rounded-lg p-5 shadow-lg flex flex-col reveal-on-scroll" data-id="adesivo-recorte" data-name="Adesivo Recorte Eletrônico" data-price-m2="80.00" data-type="area">
+                        <h4 class="font-orbitron text-lg font-bold mb-4">Adesivo Recorte Eletrônico</h4>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div><label class="block text-sm font-medium mb-1">Altura (cm)</label><input type="number" class="custom-height w-full p-2 border border-gray-300 rounded-md" min="1"></div>
+                            <div><label class="block text-sm font-medium mb-1">Largura (cm)</label><input type="number" class="custom-width w-full p-2 border border-gray-300 rounded-md" min="1"></div>
+                        </div>
+                        <div class="mb-4"><label class="block text-sm font-medium mb-1">Cor do Adesivo</label><select class="w-full p-2 border border-gray-300 rounded-md"><option>Branco</option><option>Preto</option><option>Vermelho</option><option>Azul</option><option>Verde</option><option>Amarelo</option><option>Prata</option><option>Ouro</option></select></div>
+                        <div class="mt-auto">
+                            <div class="calculated-price text-3xl font-bold text-center h-10 mb-3"></div>
+                            <div class="flex gap-2">
+                                <button class="add-to-cart-btn custom bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="adesivo-recorte">Galeria</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Category: Banners e Faixas -->
+            <div id="banners" class="mb-12">
+                <h3 class="font-orbitron text-2xl md:text-3xl text-yellow-400 border-b-2 border-yellow-400/50 pb-3 mb-8 reveal-on-scroll">Banners e Faixas</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Custom Product Card: Banner com Bastão -->
+                    <div class="custom-product-card bg-gray-100 text-gray-900 rounded-lg p-5 shadow-lg flex flex-col reveal-on-scroll" data-id="banner-bastao" data-name="Banner com Bastão" data-price-m2="100.00" data-type="area">
+                        <h4 class="font-orbitron text-lg font-bold mb-4">Banner com Bastão</h4>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div><label class="block text-sm font-medium mb-1">Altura (cm)</label><input type="number" class="custom-height w-full p-2 border border-gray-300 rounded-md" min="1"></div>
+                            <div><label class="block text-sm font-medium mb-1">Largura (cm)</label><input type="number" class="custom-width w-full p-2 border border-gray-300 rounded-md" min="1"></div>
+                        </div>
+                        <div class="mb-4"><label class="block text-sm font-medium mb-1">Quantidade</label><input type="number" class="custom-quantity w-full p-2 border border-gray-300 rounded-md" value="1" min="1"></div>
+                        <div class="mt-auto">
+                            <div class="calculated-price text-3xl font-bold text-center h-10 mb-3"></div>
+                            <div class="flex gap-2">
+                                <button class="add-to-cart-btn custom bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="banner-bastao">Galeria</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Custom Product Card: Faixa com Madeirinhas -->
+                    <div class="custom-product-card bg-gray-100 text-gray-900 rounded-lg p-5 shadow-lg flex flex-col reveal-on-scroll" data-id="faixa-madeirinhas" data-name="Faixa com Madeirinhas" data-price-m2="100.00" data-type="area">
+                        <h4 class="font-orbitron text-lg font-bold mb-4">Faixa com Madeirinhas</h4>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div><label class="block text-sm font-medium mb-1">Altura (cm)</label><input type="number" class="custom-height w-full p-2 border border-gray-300 rounded-md" min="1"></div>
+                            <div><label class="block text-sm font-medium mb-1">Largura (cm)</label><input type="number" class="custom-width w-full p-2 border border-gray-300 rounded-md" min="1"></div>
+                        </div>
+                        <div class="mb-4"><label class="block text-sm font-medium mb-1">Quantidade</label><input type="number" class="custom-quantity w-full p-2 border border-gray-300 rounded-md" value="1" min="1"></div>
+                        <div class="mt-auto">
+                            <div class="calculated-price text-3xl font-bold text-center h-10 mb-3"></div>
+                            <div class="flex gap-2">
+                                <button class="add-to-cart-btn custom bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="faixa-madeirinhas">Galeria</button>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Product Card: Wind Banner Faca P -->
+                    <div class="product-card bg-gray-100 text-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col transition-transform duration-300 hover:scale-105 reveal-on-scroll" data-id="wb-faca-p" data-name="Wind Banner Faca - Tam. P">
+                        <img src="https://placehold.co/600x400/1f2937/fcee09?text=Wind+Banner" alt="Imagem de Wind Banner" class="w-full h-48 object-cover">
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h4 class="font-orbitron text-lg font-bold">Wind Banner Faca - P</h4>
+                            <p class="text-sm text-gray-600 mt-1 mb-4 flex-grow">Tamanho 65x190cm, completo para piso.</p>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Quantidade</label>
+                                <select class="quantity-select w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <option value="299.98">1 unidade</option>
+                                    <option value="859.98">3 unidades</option>
+                                    <option value="1419.98">5 unidades</option>
+                                    <option value="2819.98">10 unidades</option>
+                                </select>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="product-price text-3xl font-bold text-gray-800 mb-3">R$ 299,98</div>
+                                <div class="flex gap-2">
+                                    <button class="add-to-cart-btn bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                    <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="wb-faca-p">Galeria</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Card: Wind Banner Faca M -->
+                    <div class="product-card bg-gray-100 text-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col transition-transform duration-300 hover:scale-105 reveal-on-scroll" data-id="wb-faca-m" data-name="Wind Banner Faca - Tam. M">
+                        <img src="https://placehold.co/600x400/1f2937/fcee09?text=Wind+Banner" alt="Imagem de Wind Banner" class="w-full h-48 object-cover">
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h4 class="font-orbitron text-lg font-bold">Wind Banner Faca - M</h4>
+                            <p class="text-sm text-gray-600 mt-1 mb-4 flex-grow">Tamanho 65x250cm, completo para piso.</p>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Quantidade</label>
+                                <select class="quantity-select w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <option value="339.98">1 unidade</option>
+                                    <option value="979.98">3 unidades</option>
+                                    <option value="1619.98">5 unidades</option>
+                                    <option value="3219.98">10 unidades</option>
+                                </select>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="product-price text-3xl font-bold text-gray-800 mb-3">R$ 339,98</div>
+                                <div class="flex gap-2">
+                                    <button class="add-to-cart-btn bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                    <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="wb-faca-m">Galeria</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Card: Wind Banner Faca G -->
+                    <div class="product-card bg-gray-100 text-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col transition-transform duration-300 hover:scale-105 reveal-on-scroll" data-id="wb-faca-g" data-name="Wind Banner Faca - Tam. G">
+                        <img src="https://placehold.co/600x400/1f2937/fcee09?text=Wind+Banner" alt="Imagem de Wind Banner" class="w-full h-48 object-cover">
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h4 class="font-orbitron text-lg font-bold">Wind Banner Faca - G</h4>
+                            <p class="text-sm text-gray-600 mt-1 mb-4 flex-grow">Tamanho 65x300cm, completo para piso.</p>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-1">Quantidade</label>
+                                <select class="quantity-select w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <option value="379.98">1 unidade</option>
+                                    <option value="1099.98">3 unidades</option>
+                                    <option value="1819.98">5 unidades</option>
+                                    <option value="3619.98">10 unidades</option>
+                                </select>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="product-price text-3xl font-bold text-gray-800 mb-3">R$ 379,98</div>
+                                <div class="flex gap-2">
+                                    <button class="add-to-cart-btn bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                    <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="wb-faca-g">Galeria</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category: Toldos -->
+            <div id="toldos" class="mb-12">
+                <h3 class="font-orbitron text-2xl md:text-3xl text-yellow-400 border-b-2 border-yellow-400/50 pb-3 mb-8 reveal-on-scroll">Toldos</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                     <!-- Custom Product Card: Toldo Retrátil -->
+                    <div class="custom-product-card bg-gray-100 text-gray-900 rounded-lg p-5 shadow-lg flex flex-col reveal-on-scroll" data-id="toldo-retratil" data-name="Toldo Retrátil" data-type="linear-retratil">
+                        <h4 class="font-orbitron text-lg font-bold mb-4">Toldo Retrátil</h4>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div><label class="block text-sm font-medium mb-1">Largura (cm)</label><input type="number" class="custom-width w-full p-2 border border-gray-300 rounded-md" min="1"></div>
+                            <div><label class="block text-sm font-medium mb-1">Projeção (cm)</label><input type="number" class="custom-projection w-full p-2 border border-gray-300 rounded-md" min="1"></div>
+                        </div>
+                        <div class="mb-4"><label class="block text-sm font-medium mb-1">Cor da Lona</label><select class="w-full p-2 border border-gray-300 rounded-md"><option>Bege</option><option>Cinza</option><option>Marrom</option><option>Preto</option></select></div>
+                        <div class="mt-auto">
+                            <div class="calculated-price text-3xl font-bold text-center h-10 mb-3"></div>
+                            <div class="flex gap-2">
+                                <button class="add-to-cart-btn custom bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="toldo-retratil">Galeria</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Custom Product Card: Toldo Cortina -->
+                    <div class="custom-product-card bg-gray-100 text-gray-900 rounded-lg p-5 shadow-lg flex flex-col reveal-on-scroll" data-id="toldo-cortina" data-name="Toldo Cortina" data-type="linear-cortina">
+                        <h4 class="font-orbitron text-lg font-bold mb-4">Toldo Cortina</h4>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div><label class="block text-sm font-medium mb-1">Largura (cm)</label><input type="number" class="custom-width w-full p-2 border border-gray-300 rounded-md" min="1"></div>
+                            <div><label class="block text-sm font-medium mb-1">Altura (cm)</label><input type="number" class="custom-height w-full p-2 border border-gray-300 rounded-md" min="1"></div>
+                        </div>
+                        <div class="mb-4"><label class="block text-sm font-medium mb-1">Cor da Lona</label><select class="w-full p-2 border border-gray-300 rounded-md"><option>Bege</option><option>Cinza</option><option>Marrom</option><option>Preto</option></select></div>
+                        <div class="mt-auto">
+                            <div class="calculated-price text-3xl font-bold text-center h-10 mb-3"></div>
+                            <div class="flex gap-2">
+                                <button class="add-to-cart-btn custom bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="toldo-cortina">Galeria</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category: Camisetas -->
+            <div id="camisetas" class="mb-12">
+                 <h3 class="font-orbitron text-2xl md:text-3xl text-yellow-400 border-b-2 border-yellow-400/50 pb-3 mb-8 reveal-on-scroll">Camisetas</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Product Card: Camiseta Dry -->
+                    <div class="product-card bg-gray-100 text-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col transition-transform duration-300 hover:scale-105 reveal-on-scroll" data-id="camiseta-dry" data-name="Camiseta Dry Gola Redonda">
+                        <img src="https://placehold.co/600x400/1f2937/fcee09?text=Camiseta" alt="Imagem de Camiseta Dry Fit" class="w-full h-48 object-cover">
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h4 class="font-orbitron text-lg font-bold">Camiseta Dry Gola Redonda</h4>
+                            <p class="text-sm text-gray-600 mt-1 mb-4 flex-grow">Impressão Ultra HD Sublimática na frente (4x0).</p>
+                             <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">Tamanho</label>
+                                    <select class="size-select w-full p-2 border border-gray-300 rounded-md bg-white">
+                                        <option>P</option>
+                                        <option>M</option>
+                                        <option>G</option>
+                                        <option>GG</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">Quantidade</label>
+                                    <select class="quantity-select w-full p-2 border border-gray-300 rounded-md bg-white">
+                                        <option value="69.98">1 unidade</option>
+                                        <option value="347.98">5 unidades</option>
+                                        <option value="693.98">10 unidades</option>
+                                        <option value="1383.98">20 unidades</option>
+                                        <option value="2069.98">30 unidades</option>
+                                        <option value="2751.98">40 unidades</option>
+                                        <option value="3429.98">50 unidades</option>
+                                        <option value="6839.98">100 unidades</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="product-price text-3xl font-bold text-gray-800 mb-3">R$ 69,98</div>
+                                <div class="flex gap-2">
+                                    <button class="add-to-cart-btn bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md w-full hover:bg-yellow-500 transition-colors duration-300">Adicionar</button>
+                                    <button class="gallery-btn border-2 border-yellow-400 text-yellow-600 font-bold py-3 px-4 rounded-md hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300" data-product-id="camiseta-dry">Galeria</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- EDITABLE ITEM: Footer Section -->
+    <!-- Instructions: Update contact details, address, and social media links. -->
+    <footer class="bg-gray-900/50 border-t-4 border-yellow-400 mt-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
+                <div class="md:col-span-1">
+                    <h4 class="font-orbitron text-lg text-yellow-400 mb-2">Vidal Design</h4>
+                    <p class="text-sm text-gray-400">Qualidade e Inovação em Comunicação Visual.</p>
+                </div>
+                <div>
+                    <h4 class="font-orbitron text-lg text-yellow-400 mb-2">Contato</h4>
+                    <p class="text-sm"><a href="tel:+5511968649673" class="text-gray-300 hover:text-yellow-400">11 96864-9673</a></p>
+                    <p class="text-sm"><a href="tel:+5511949141803" class="text-gray-300 hover:text-yellow-400">11 94914-1803</a></p>
+                </div>
+                <div>
+                    <h4 class="font-orbitron text-lg text-yellow-400 mb-2">Endereço</h4>
+                    <div id="address-link" class="cursor-pointer text-sm text-gray-300 hover:text-yellow-400">
+                        <p>Rua Antonio Cordeiro, 57</p>
+                        <p>Mogi das Cruzes - SP</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-orbitron text-lg text-yellow-400 mb-2">Redes Sociais</h4>
+                    <div class="flex justify-center md:justify-start gap-4">
+                        <a href="https://www.facebook.com/share/1BqrEs4rEr/" target="_blank" title="Facebook" class="text-gray-400 hover:text-yellow-400"><svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+                        <a href="https://www.instagram.com/vidaldesignsolutions?igsh=MTYxbTgxazY5ZzI1OQ==" target="_blank" title="Instagram" class="text-gray-400 hover:text-yellow-400"><svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.644-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.441 1.441 1.441 1.441-.645 1.441-1.441-.645-1.44-1.441-1.44z"/></svg></a>
+                        <a href="https://g.page/r/CXNPrWMbM0IZEBM/review" target="_blank" title="Google Reviews" class="text-gray-400 hover:text-yellow-400"><svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.0001 10.2217V13.8001H17.2117C16.3942 16.4442 13.6226 17.5751 12.0001 17.5751C9.03843 17.5751 7.05469 15.2418 7.05469 12.0001C7.05469 8.75843 9.03843 6.42505 12.0001 6.42505C13.8626 6.42505 14.9501 7.32505 15.4251 7.75843L18.1001 5.15843C16.3942 3.63343 14.3684 3 12.0001 3C7.30005 3 4 6.85005 4 12.0001C4 17.1501 7.30005 21.0001 12.0001 21.0001C17.0751 21.0001 20 17.4001 20 12.2418C20 11.4501 19.9313 10.7834 19.8096 10.2217H12.0001Z"/></svg></a>
+                        <a href="https://photos.app.goo.gl/HiRZfa4eNnUpwyca7" target="_blank" title="Google Photos" class="text-gray-400 hover:text-yellow-400"><svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 10.75C5.7 10.75 5.25 11.2 5.25 12C5.25 12.8 5.7 13.25 6.5 13.25C7.3 13.25 7.75 12.8 7.75 12C7.75 11.2 7.3 10.75 6.5 10.75ZM12 5.25C11.2 5.25 10.75 5.7 10.75 6.5C10.75 7.3 11.2 7.75 12 7.75C12.8 7.75 13.25 7.3 13.25 6.5C13.25 5.7 12.8 5.25 12 5.25ZM17.5 10.75C16.7 10.75 16.25 11.2 16.25 12C16.25 12.8 16.7 13.25 17.5 13.25C18.3 13.25 18.75 12.8 18.75 12C18.75 11.2 18.3 10.75 17.5 10.75ZM12 16.25C11.2 16.25 10.75 16.7 10.75 17.5C10.75 18.3 11.2 18.75 12 18.75C12.8 18.75 13.25 18.3 13.25 17.5C13.25 16.7 12.8 16.25 12 16.25ZM12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2Z"/></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center text-gray-500 text-sm mt-8 pt-6 border-t border-gray-700">
+                &copy; 2024 Vidal Design Solutions. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals and Floating Buttons -->
+    <div id="modals-container">
+        <!-- Cart Modal -->
+        <div id="cart-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 hidden">
+            <div class="bg-white text-gray-800 rounded-lg shadow-xl w-11/12 max-w-2xl max-h-[85vh] flex flex-col">
+                <div class="p-5 border-b flex justify-between items-center">
+                    <h2 id="cart-modal-title" class="text-2xl font-bold font-orbitron">Carrinho de Compras</h2>
+                    <button id="close-cart-modal-btn" class="text-3xl font-bold text-gray-500 hover:text-red-500">&times;</button>
+                </div>
+                <!-- Cart View -->
+                <div id="cart-view" class="flex flex-col flex-grow min-h-0">
+                    <div id="cart-items-container" class="p-5 overflow-y-auto flex-grow"></div>
+                    <div class="p-5 border-t bg-gray-50">
+                        <div id="cart-total" class="text-2xl font-bold text-right mb-4">Total: R$ 0,00</div>
+                        <div class="cart-actions flex justify-end gap-3">
+                            <button class="action-btn bg-gray-600 text-white font-bold py-2 px-4 rounded hover:bg-gray-700" data-action="pdf">Gerar PDF</button>
+                            <button class="whatsapp-btn bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600" data-action="whatsapp">Enviar via WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Lead Form View -->
+                <div id="lead-form-container" class="p-5 hidden">
+                    <div class="mb-4">
+                        <label for="customer-name" class="block font-bold mb-1">Seu Nome Completo</label>
+                        <input type="text" id="customer-name" class="w-full p-2 border border-gray-300 rounded" required>
+                        <div id="name-error" class="text-red-500 text-sm mt-1"></div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="customer-contact" class="block font-bold mb-1">Seu Contato (WhatsApp/Email)</label>
+                        <input type="text" id="customer-contact" class="w-full p-2 border border-gray-300 rounded" required>
+                        <div id="contact-error" class="text-red-500 text-sm mt-1"></div>
+                    </div>
+                    <div class="flex justify-end gap-3 mt-6">
+                        <button id="back-to-cart-btn" class="bg-gray-600 text-white font-bold py-2 px-4 rounded hover:bg-gray-700">Voltar</button>
+                        <button id="finalize-order-btn" class="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600">Finalizar Pedido</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Gallery Modal -->
+        <div id="gallery-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center z-50 hidden">
+            <div class="bg-white text-gray-800 rounded-lg shadow-xl w-11/12 max-w-4xl max-h-[90vh] flex flex-col relative">
+                <button id="close-gallery-modal-btn" class="absolute -top-3 -right-3 text-white bg-red-500 rounded-full h-8 w-8 text-2xl font-bold flex items-center justify-center">&times;</button>
+                <h3 id="gallery-title" class="text-2xl font-bold font-orbitron p-5 border-b">Galeria de Fotos</h3>
+                <div id="gallery-content" class="p-5 overflow-y-auto grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <!-- Images will be injected here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Buttons -->
+    <div class="fixed bottom-6 right-6 z-40 flex flex-col gap-4">
+        <button id="back-to-top-btn" class="h-14 w-14 bg-gray-800 text-yellow-400 rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-400 hover:text-gray-900 transition-all duration-300 opacity-0 translate-y-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+        </button>
+        <button id="floating-cart-btn" class="relative h-14 w-14 bg-gray-800 text-yellow-400 rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+            <span id="floating-cart-count" class="absolute -top-1 -right-1 bg-yellow-400 text-gray-900 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-gray-800">0</span>
+        </button>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-green-500 text-white py-3 px-6 rounded-lg shadow-lg opacity-0 translate-y-4 transition-all duration-500 z-50">
+        Item adicionado ao carrinho!
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // State
+        let cart = [];
+        let finalAction = '';
+
+        // --- EDITABLE ITEM: Photo Gallery Data ---
+        // Instructions: Replace the placeholder URLs with your actual image URLs for each product.
+        const photoGalleries = {
+            'cv-fosco-verniz': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1', 'https://placehold.co/600x400/1f2937/fcee09?text=Foto+2'],
+            'cv-4x0': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'cv-4x4': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'cv-brilho-4x0': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'cv-brilho-4x4': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'folheto-4x0': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'folheto-4x4': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'adesivo-impresso': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'adesivo-recorte': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'banner-bastao': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'faixa-madeirinhas': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'wb-faca-p': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'wb-faca-m': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'wb-faca-g': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'toldo-retratil': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'toldo-cortina': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1'],
+            'camiseta-dry': ['https://placehold.co/600x400/1f2937/fcee09?text=Foto+1']
+        };
+
+        // DOM Elements
+        const DOMElements = {
+            cartIcon: document.getElementById('cart-icon'),
+            cartModal: document.getElementById('cart-modal'),
+            closeCartModalBtn: document.getElementById('close-cart-modal-btn'),
+            cartItemsContainer: document.getElementById('cart-items-container'),
+            cartTotalEl: document.getElementById('cart-total'),
+            headerCartCountEl: document.getElementById('header-cart-count'),
+            notificationEl: document.getElementById('notification'),
+            cartView: document.getElementById('cart-view'),
+            leadFormContainer: document.getElementById('lead-form-container'),
+            finalizeOrderBtn: document.getElementById('finalize-order-btn'),
+            backToCartBtn: document.getElementById('back-to-cart-btn'),
+            customerNameInput: document.getElementById('customer-name'),
+            customerContactInput: document.getElementById('customer-contact'),
+            floatingCartBtn: document.getElementById('floating-cart-btn'),
+            floatingCartCountEl: document.getElementById('floating-cart-count'),
+            backToTopBtn: document.getElementById('back-to-top-btn'),
+            cartModalTitle: document.getElementById('cart-modal-title'),
+            galleryModal: document.getElementById('gallery-modal'),
+            closeGalleryModalBtn: document.getElementById('close-gallery-modal-btn'),
+            galleryTitle: document.getElementById('gallery-title'),
+            galleryContent: document.getElementById('gallery-content')
+        };
+
+        // --- UTILS ---
+        const formatCurrency = (value) => `R$ ${value.toFixed(2).replace('.', ',')}`;
+        const showNotification = () => {
+            DOMElements.notificationEl.classList.remove('opacity-0', 'translate-y-4');
+            setTimeout(() => {
+                DOMElements.notificationEl.classList.add('opacity-0', 'translate-y-4');
+            }, 2000);
+        };
+        const openModal = (modal) => modal.classList.remove('hidden');
+        const closeModal = (modal) => modal.classList.add('hidden');
+
+        // --- CART LOGIC ---
+        const updateCartUI = () => {
+            DOMElements.cartItemsContainer.innerHTML = '';
+            let total = 0;
+            let totalItems = 0;
+
+            if (cart.length === 0) {
+                DOMElements.cartItemsContainer.innerHTML = '<p class="text-center text-gray-500">Seu carrinho está vazio.</p>';
+                DOMElements.cartView.querySelector('.cart-actions').style.display = 'none';
+            } else {
+                DOMElements.cartView.querySelector('.cart-actions').style.display = 'flex';
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    totalItems += item.quantity;
+
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'cart-item flex items-center justify-between py-3 border-b';
+                    itemEl.innerHTML = `
+                        <div class="flex-grow pr-4">
+                            <h4 class="font-bold">${item.name}</h4>
+                            <p class="text-sm text-gray-600">${item.desc}</p>
+                            <p class="font-semibold">${formatCurrency(itemTotal)}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            ${item.isCustom ? 
+                                `<span class="font-bold">Qtd: ${item.quantity}</span>` : 
+                                `<button class="quantity-btn h-8 w-8 bg-gray-200 rounded-full font-bold" data-id="${item.id}" data-action="decrease">-</button>
+                                 <span class="font-bold w-8 text-center">${item.quantity}</span>
+                                 <button class="quantity-btn h-8 w-8 bg-gray-200 rounded-full font-bold" data-id="${item.id}" data-action="increase">+</button>`
+                            }
+                            <button class="remove-item-btn text-red-500 hover:text-red-700 ml-2 text-2xl font-bold" data-id="${item.id}" title="Remover">&times;</button>
+                        </div>
+                    `;
+                    DOMElements.cartItemsContainer.appendChild(itemEl);
+                });
+            }
+
+            DOMElements.cartTotalEl.innerText = `Total: ${formatCurrency(total)}`;
+            DOMElements.headerCartCountEl.innerText = totalItems;
+            DOMElements.floatingCartCountEl.innerText = totalItems;
+        };
+        
+        const addToCart = (itemData) => {
+            const existingItem = cart.find(item => item.id === itemData.id && item.desc === itemData.desc);
+            if (existingItem) {
+                existingItem.quantity += itemData.quantity;
+            } else {
+                cart.push(itemData);
+            }
+            updateCartUI();
+            showNotification();
+        };
+
+        // --- EVENT LISTENERS INITIALIZATION ---
+        const initEventListeners = () => {
+            // Standard Products
+            document.querySelectorAll('.add-to-cart-btn:not(.custom)').forEach(button => {
+                const productCard = button.closest('.product-card');
+                const quantitySelect = productCard.querySelector('.quantity-select');
+                const priceDisplay = productCard.querySelector('.product-price');
+                const sizeSelect = productCard.querySelector('.size-select');
+
+                if (quantitySelect) {
+                    quantitySelect.addEventListener('change', (e) => {
+                        priceDisplay.innerText = formatCurrency(parseFloat(e.target.value));
+                    });
+
+                    button.addEventListener('click', () => {
+                        const selectedOption = quantitySelect.options[quantitySelect.selectedIndex];
+                        let desc = selectedOption.text;
+                        let id = productCard.dataset.id + desc;
+
+                        if(sizeSelect) {
+                            const selectedSize = sizeSelect.value;
+                            desc += ` - Tam: ${selectedSize}`;
+                            id += selectedSize;
+                        }
+
+                        addToCart({
+                            id: id, name: productCard.dataset.name,
+                            price: parseFloat(selectedOption.value), desc: desc,
+                            quantity: 1, isCustom: false
+                        });
+                    });
+                }
+            });
+
+            // Custom Products
+            document.querySelectorAll('.custom-product-card').forEach(card => {
+                const priceDisplay = card.querySelector('.calculated-price');
+                const inputs = card.querySelectorAll('input, select');
+                
+                const calculatePrice = () => {
+                    let price = 0;
+                    const type = card.dataset.type;
+
+                    if (type === 'area') {
+                        const height = parseFloat(card.querySelector('.custom-height')?.value) || 0;
+                        const width = parseFloat(card.querySelector('.custom-width')?.value) || 0;
+                        if (height > 0 && width > 0) {
+                            const pricePerM2 = parseFloat(card.dataset.priceM2);
+                            const quantity = parseInt(card.querySelector('.custom-quantity')?.value) || 1;
+                            const area = (height/100) * (width/100) * quantity;
+                            price = Math.max(area, 0.5) * pricePerM2;
+                        }
+                    } else if (type === 'linear-retratil') {
+                         const width = parseFloat(card.querySelector('.custom-width')?.value) || 0;
+                         const projection = parseFloat(card.querySelector('.custom-projection')?.value) || 0;
+                         if (width > 0 && projection > 0) {
+                            const pricePerLinearM = projection <= 150 ? 300 : 350;
+                            price = (width / 100) * pricePerLinearM;
+                         }
+                    } else if (type === 'linear-cortina') {
+                        const width = parseFloat(card.querySelector('.custom-width')?.value) || 0;
+                        const height = parseFloat(card.querySelector('.custom-height')?.value) || 0;
+                        if (width > 0 && height > 0) {
+                            const pricePerLinearM = height <= 200 ? 300 : 350;
+                            price = (width / 100) * pricePerLinearM;
+                        }
+                    }
+
+                    if (price > 0) {
+                        priceDisplay.innerText = formatCurrency(price);
+                    } else {
+                        priceDisplay.innerText = '';
+                    }
+                };
+
+                inputs.forEach(input => input.addEventListener('input', calculatePrice));
+
+                card.querySelector('.add-to-cart-btn.custom').addEventListener('click', () => {
+                    const name = card.dataset.name;
+                    const type = card.dataset.type;
+                    let isValid = false;
+                    let itemData = {};
+
+                    if (type === 'area') {
+                        const height = parseFloat(card.querySelector('.custom-height')?.value) || 0;
+                        const width = parseFloat(card.querySelector('.custom-width')?.value) || 0;
+                        const quantity = parseInt(card.querySelector('.custom-quantity')?.value) || 0;
+                        if (height > 0 && width > 0 && quantity > 0) {
+                            const pricePerM2 = parseFloat(card.dataset.priceM2);
+                            const totalAreaM2 = ((height / 100) * (width / 100)) * quantity;
+                            const chargeableAreaM2 = Math.max(totalAreaM2, 0.5);
+                            const totalPrice = chargeableAreaM2 * pricePerM2;
+                            itemData = {
+                                id: Date.now().toString(), name, price: totalPrice / quantity,
+                                desc: `Medidas: ${height}cm x ${width}cm`, quantity, isCustom: true
+                            };
+                            isValid = true;
+                        }
+                    } else if (type === 'linear-retratil') {
+                        const width = parseFloat(card.querySelector('.custom-width')?.value) || 0;
+                        const projection = parseFloat(card.querySelector('.custom-projection')?.value) || 0;
+                        if (width > 0 && projection > 0) {
+                            const pricePerLinearM = projection <= 150 ? 300 : 350;
+                            const totalPrice = (width / 100) * pricePerLinearM;
+                            itemData = {
+                                id: Date.now().toString(), name, price: totalPrice,
+                                desc: `Largura: ${width}cm | Projeção: ${projection}cm`, quantity: 1, isCustom: true
+                            };
+                            isValid = true;
+                        }
+                    } else if (type === 'linear-cortina') {
+                        const width = parseFloat(card.querySelector('.custom-width')?.value) || 0;
+                        const height = parseFloat(card.querySelector('.custom-height')?.value) || 0;
+                        if (width > 0 && height > 0) {
+                            const pricePerLinearM = height <= 200 ? 300 : 350;
+                            const totalPrice = (width / 100) * pricePerLinearM;
+                            itemData = {
+                                id: Date.now().toString(), name, price: totalPrice,
+                                desc: `Largura: ${width}cm | Altura: ${height}cm`, quantity: 1, isCustom: true
+                            };
+                            isValid = true;
+                        }
+                    }
+                    
+                    if (isValid) {
+                        addToCart(itemData);
+                    } else {
+                        alert("Por favor, preencha todos os campos corretamente.");
+                    }
+                });
+            });
+
+            // Cart Interactions
+            DOMElements.cartItemsContainer.addEventListener('click', (e) => {
+                const target = e.target.closest('button');
+                if (!target) return;
+                
+                const id = target.dataset.id;
+                const itemIndex = cart.findIndex(i => i.id === id);
+                if (itemIndex === -1) return;
+
+                if (target.classList.contains('quantity-btn')) {
+                    const action = target.dataset.action;
+                    if (action === 'increase') cart[itemIndex].quantity++;
+                    else if (action === 'decrease' && cart[itemIndex].quantity > 1) cart[itemIndex].quantity--;
+                } else if (target.classList.contains('remove-item-btn')) {
+                    cart.splice(itemIndex, 1);
+                }
+                updateCartUI();
+            });
+
+            // Modal Controls
+            const cartTriggers = [DOMElements.cartIcon, DOMElements.floatingCartBtn];
+            cartTriggers.forEach(trigger => trigger.addEventListener('click', () => {
+                DOMElements.cartView.style.display = 'flex';
+                DOMElements.leadFormContainer.style.display = 'none';
+                DOMElements.cartModalTitle.innerText = 'Carrinho de Compras';
+                updateCartUI();
+                openModal(DOMElements.cartModal);
+            }));
+            
+            DOMElements.closeCartModalBtn.addEventListener('click', () => closeModal(DOMElements.cartModal));
+            DOMElements.cartModal.addEventListener('click', (e) => {
+                if (e.target === DOMElements.cartModal) closeModal(DOMElements.cartModal);
+            });
+
+            // Gallery Modal Logic
+            document.querySelectorAll('.gallery-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const productId = button.dataset.productId;
+                    const images = photoGalleries[productId] || [];
+                    const productCard = button.closest('.product-card, .custom-product-card');
+                    const productName = productCard.dataset.name;
+
+                    DOMElements.galleryTitle.innerText = `Galeria: ${productName}`;
+                    DOMElements.galleryContent.innerHTML = '';
+
+                    if (images.length > 0) {
+                        images.forEach(imgUrl => {
+                            const img = document.createElement('img');
+                            img.src = imgUrl;
+                            img.alt = productName;
+                            img.className = 'w-full h-auto rounded-lg object-cover';
+                            DOMElements.galleryContent.appendChild(img);
+                        });
+                    } else {
+                        DOMElements.galleryContent.innerHTML = '<p>Nenhuma foto disponível para este produto.</p>';
+                    }
+                    openModal(DOMElements.galleryModal);
+                });
+            });
+
+            DOMElements.closeGalleryModalBtn.addEventListener('click', () => closeModal(DOMElements.galleryModal));
+            DOMElements.galleryModal.addEventListener('click', (e) => {
+                if (e.target === DOMElements.galleryModal) closeModal(DOMElements.galleryModal);
+            });
+
+            // Form Logic
+            DOMElements.cartView.querySelector('.cart-actions').addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    finalAction = e.target.dataset.action;
+                    DOMElements.cartView.style.display = 'none';
+                    DOMElements.leadFormContainer.style.display = 'block';
+                    DOMElements.cartModalTitle.innerText = 'Informações para o Pedido';
+                }
+            });
+
+            DOMElements.backToCartBtn.addEventListener('click', () => {
+                DOMElements.leadFormContainer.style.display = 'none';
+                DOMElements.cartView.style.display = 'flex';
+                DOMElements.cartModalTitle.innerText = 'Carrinho de Compras';
+            });
+
+            DOMElements.finalizeOrderBtn.addEventListener('click', () => {
+                const name = DOMElements.customerNameInput.value.trim();
+                const contact = DOMElements.customerContactInput.value.trim();
+                let isValid = true;
+                DOMElements.customerNameInput.nextElementSibling.textContent = '';
+                DOMElements.customerContactInput.nextElementSibling.textContent = '';
+                if (!name) {
+                    DOMElements.customerNameInput.nextElementSibling.textContent = 'Por favor, preencha seu nome.';
+                    isValid = false;
+                }
+                if (!contact) {
+                    DOMElements.customerContactInput.nextElementSibling.textContent = 'Por favor, preencha seu contato.';
+                    isValid = false;
+                }
+                if(isValid) {
+                    if (finalAction === 'whatsapp') sendWhatsAppMessage(name, contact);
+                    if (finalAction === 'pdf') generatePDF(name, contact);
+                    closeModal(DOMElements.cartModal);
+                }
+            });
+
+            // Back to Top Button
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    DOMElements.backToTopBtn.classList.remove('opacity-0', 'translate-y-4');
+                } else {
+                    DOMElements.backToTopBtn.classList.add('opacity-0', 'translate-y-4');
+                }
+            });
+            DOMElements.backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+
+        };
+        
+        // --- ORDER FINALIZATION ---
+        const generateOrderSummary = (customerName, customerContact) => {
+            let summary = `*DADOS DO CLIENTE:*\nNome: ${customerName}\nContato: ${customerContact}\n\n*PEDIDO:*\n\n`;
+            let total = 0;
+            cart.forEach(item => {
+                summary += `*Produto:* ${item.name}\n*Detalhes:* ${item.desc}\n*Quantidade:* ${item.quantity}\n*Subtotal:* ${formatCurrency(item.price * item.quantity)}\n\n`;
+                total += item.price * item.quantity;
+            });
+            summary += `*TOTAL DO PEDIDO: ${formatCurrency(total)}*`;
+            return { summary, total };
+        };
+
+        const sendWhatsAppMessage = (name, contact) => {
+            const { summary } = generateOrderSummary(name, contact);
+            const phoneNumber = '5511968649673'; // Replace with your number
+            const encodedMessage = encodeURIComponent(summary);
+            window.open(`https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`, '_blank');
+        };
+
+        const generatePDF = (name, contact) => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const { summary, total } = generateOrderSummary(name, contact);
+            
+            doc.setFontSize(18);
+            doc.text("Orçamento de Pedido - Vidal Design", 15, 20);
+            doc.setFontSize(12);
+            const summaryLines = doc.splitTextToSize(summary.replace(/\*/g, ''), 180);
+            doc.text(summaryLines, 15, 35);
+
+            doc.save(`Pedido-${name.replace(/\s/g, '_')}.pdf`);
+        };
 
         // --- INITIALIZE ---
         initEventListeners();
